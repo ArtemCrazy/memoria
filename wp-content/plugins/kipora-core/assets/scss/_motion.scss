@@ -1,0 +1,9 @@
+// Motion only answers actions; people who ask for less motion get none.
+@media (prefers-reduced-motion: reduce) {
+	.kp-button,
+	.kp-choice__body,
+	.kp-choice__body::before,
+	.kp-calc__summary {
+		transition: none;
+	}
+}

@@ -97,9 +97,55 @@ def download_tree(sftp, remote_root, local_root):
             sftp.get(remote, local)
 
 
+RUNNER_ENV = os.path.join(os.path.dirname(CREDS), "card-306-runner.env")
+RUNNER_PHP = """<?php
+// Dev-only runner for KIPORA maintenance scripts on the TEST server.
+// Not part of the repository; delete before handing over the site.
+if ( isset( $_GET['kp_run'], $_GET['script'] ) && hash_equals( '%s', (string) $_GET['kp_run'] ) ) {
+\tadd_action( 'wp_loaded', static function () {
+\t\theader( 'Content-Type: text/plain; charset=utf-8' );
+\t\t$f = WP_CONTENT_DIR . '/database/tests/' . basename( (string) $_GET['script'] ) . '.php';
+\t\tif ( is_file( $f ) ) { require $f; } else { echo 'no script'; }
+\t\texit;
+\t}, 1 );
+}
+"""
+
+
+def wp_script(client, site_dir, name):
+    """Upload tools/wp/<name>.php and run it inside WordPress via the dev runner."""
+    import secrets
+    import urllib.request
+
+    if os.path.exists(RUNNER_ENV):
+        token = load_env(RUNNER_ENV)["RUNNER_TOKEN"]
+    else:
+        token = secrets.token_hex(24)
+        with open(RUNNER_ENV, "w", encoding="utf-8") as f:
+            f.write(f"RUNNER_TOKEN={token}\n")
+    sftp = client.open_sftp()
+    ensure_dir(sftp, f"{site_dir}/wp-content/mu-plugins")
+    with sftp.open(f"{site_dir}/wp-content/mu-plugins/kp-runner.php", "w") as f:
+        f.write(RUNNER_PHP % token)
+    ensure_dir(sftp, f"{site_dir}/wp-content/database/tests")
+    sftp.put(os.path.join(ROOT, "tools", "wp", name + ".php"), f"{site_dir}/wp-content/database/tests/{name}.php")
+    sftp.close()
+    url = f"https://korovai.crazytest.ru/memoria/?kp_run={token}&script={name}"
+    req = urllib.request.Request(url, headers={"Cookie": "beget=begetok"})
+    try:
+        with urllib.request.urlopen(req, timeout=300) as r:
+            sys.stdout.buffer.write(r.read())
+    except urllib.error.HTTPError as e:
+        sys.stdout.buffer.write(e.read())
+        return 1
+    return 0
+
+
 def main():
     args = sys.argv[1:]
     client, site_dir = connect()
+    if "--wp" in args:
+        sys.exit(wp_script(client, site_dir, args[args.index("--wp") + 1]))
     if "--run" in args:
         sys.exit(run(client, site_dir, args[args.index("--run") + 1]))
     if "--pull" in args:

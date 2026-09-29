@@ -1,0 +1,44 @@
+.kp-notice {
+	margin-bottom: var(--kp-space-4);
+	padding: var(--kp-space-3) var(--kp-space-4);
+	border-left: 3px solid var(--kp-moss);
+	border-radius: 0 var(--kp-radius-s) var(--kp-radius-s) 0;
+	background: var(--kp-moss-wash);
+	color: var(--kp-ink);
+
+	&--warn {
+		border-color: var(--kp-candle);
+		background: var(--kp-candle-wash);
+	}
+
+	&--error {
+		border-color: var(--kp-error);
+		background: var(--kp-error-wash);
+	}
+}
+
+.kp-status {
+	display: inline-block;
+	padding: 2px var(--kp-space-2);
+	border-radius: var(--kp-radius-s);
+	background: var(--kp-mist);
+	font-size: var(--kp-text-s);
+	color: var(--kp-ink-soft);
+
+	&--paid,
+	&--in_progress {
+		background: var(--kp-candle-wash);
+		color: var(--kp-ink);
+	}
+
+	&--done {
+		background: var(--kp-moss-wash);
+		color: var(--kp-moss-deep);
+	}
+
+	&--payment_failed,
+	&--cancelled {
+		background: var(--kp-error-wash);
+		color: var(--kp-error);
+	}
+}

@@ -1,0 +1,46 @@
+.page-head {
+	margin-bottom: var(--kp-space-6);
+
+	&__title {
+		max-width: 22ch;
+		margin: 0;
+		font: 500 var(--kp-text-3xl) / 1.1 var(--kp-font-display);
+	}
+}
+
+.entry {
+	> * {
+		max-width: 68ch;
+	}
+
+	> .alignwide,
+	> .wp-block-columns,
+	> .wp-block-shortcode,
+	> .kp-calc,
+	> .kp-checkout,
+	> .kp-account,
+	> .kp-result {
+		max-width: none;
+	}
+
+	// Direct children only: headings inside plugin blocks keep their own spacing.
+	> h2 {
+		margin: var(--kp-space-7) 0 var(--kp-space-3);
+		font: 500 var(--kp-text-2xl) / 1.15 var(--kp-font-display);
+	}
+
+	> h3 {
+		margin: var(--kp-space-5) 0 var(--kp-space-2);
+		font: 500 var(--kp-text-xl) / 1.2 var(--kp-font-display);
+	}
+
+	> p,
+	> ul li,
+	> ol li {
+		line-height: 1.6;
+	}
+
+	.wp-block-columns {
+		gap: var(--kp-space-6);
+	}
+}

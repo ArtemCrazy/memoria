@@ -1,0 +1,52 @@
+// Design tokens. Every colour, size and radius on the site comes from here.
+// See docs/design.md for the reasoning.
+
+:root {
+	// Colour
+	--kp-ink: #26302e;
+	--kp-ink-soft: #56625e;
+	--kp-moss: #4c5f3a;
+	--kp-moss-deep: #3a4a2c;
+	--kp-moss-wash: #e6ecdf;
+	--kp-mist: #eef1ec;
+	--kp-paper: #fbfcfa;
+	--kp-lichen: #d5dccd;
+	--kp-lichen-deep: #a9b59e;
+	--kp-candle: #b7832f;
+	--kp-candle-wash: #f5ecdc;
+	--kp-error: #9b2c2c;
+	--kp-error-wash: #f6e5e3;
+	--kp-shadow: rgb(38 48 46 / 12%);
+	--kp-focus: 2px solid #2f5d8a;
+
+	// Type
+	--kp-font-display: 'Alegreya', 'Georgia', serif;
+	--kp-font-ui: 'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--kp-text-s: 0.875rem;
+	--kp-text-m: 1rem;
+	--kp-text-l: 1.25rem;
+	--kp-text-xl: 1.625rem;
+	--kp-text-2xl: 2.25rem;
+	--kp-text-3xl: clamp(2.25rem, 1.4rem + 3.2vw, 3.5rem);
+
+	// Space (4 px base)
+	--kp-space-1: 0.25rem;
+	--kp-space-2: 0.5rem;
+	--kp-space-3: 0.75rem;
+	--kp-space-4: 1rem;
+	--kp-space-5: 1.5rem;
+	--kp-space-6: 2.5rem;
+	--kp-space-7: 4rem;
+	--kp-space-8: 6rem;
+
+	// Shape and motion
+	--kp-radius-s: 6px;
+	--kp-radius-l: 12px;
+	--kp-fast: 150ms ease-out;
+	--kp-page: 1120px;
+	--kp-gutter: 16px;
+
+	@media (min-width: 600px) {
+		--kp-gutter: 32px;
+	}
+}

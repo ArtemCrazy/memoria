@@ -1,0 +1,10 @@
+.site-wrap {
+	width: 100%;
+	max-width: calc(var(--kp-page) + 2 * var(--kp-gutter));
+	margin: 0 auto;
+	padding: 0 var(--kp-gutter);
+}
+
+.site-main {
+	padding: var(--kp-space-6) 0 var(--kp-space-8);
+}

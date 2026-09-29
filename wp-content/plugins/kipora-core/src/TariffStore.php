@@ -91,9 +91,17 @@ final class TariffStore {
 				if ( ! is_array( $row ) ) {
 					continue;
 				}
-				$item = $map( $row );
-				if ( '' === $item['id'] || isset( $seen[ $item['id'] ] ) ) {
-					continue;
+				$item  = $map( $row );
+				$title = isset( $item['label'] ) ? $item['label']['et'] : ( $item['name'] ?? '' );
+				if ( '' === $title ) {
+					continue; // Empty row left in the form.
+				}
+				if ( '' === $item['id'] ) {
+					// New row: the id is stored in orders, so it never changes after creation.
+					$item['id'] = substr( sanitize_key( sanitize_title( $title ) ), 0, 30 ) ?: 'r' . wp_rand( 1000, 9999 );
+				}
+				while ( isset( $seen[ $item['id'] ] ) ) {
+					$item['id'] .= '-' . wp_rand( 10, 99 );
 				}
 				$seen[ $item['id'] ] = true;
 				$out[]               = $item;

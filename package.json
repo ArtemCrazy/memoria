@@ -1,0 +1,11 @@
+{
+  "name": "kipora",
+  "private": true,
+  "scripts": {
+    "build:css": "sass --no-source-map --style=compressed wp-content/plugins/kipora-core/assets/scss/kipora.scss:wp-content/plugins/kipora-core/assets/css/kipora.css wp-content/plugins/kipora-core/assets/scss/admin.scss:wp-content/plugins/kipora-core/assets/css/admin.css wp-content/themes/kipora/assets/scss/theme.scss:wp-content/themes/kipora/assets/css/theme.css",
+    "watch:css": "npm run build:css -- --watch"
+  },
+  "devDependencies": {
+    "sass": "^1.80.0"
+  }
+}

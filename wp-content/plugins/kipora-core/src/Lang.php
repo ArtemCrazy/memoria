@@ -30,6 +30,15 @@ final class Lang {
 		return in_array( $lang, self::SUPPORTED, true ) ? $lang : 'et';
 	}
 
+	public static function locale( string $lang ): string {
+		return [ 'et' => 'et', 'ru' => 'ru_RU', 'en' => 'en_US' ][ $lang ] ?? 'et';
+	}
+
+	/** REST requests run without Polylang context: switch translations explicitly. */
+	public static function use( string $lang ): void {
+		switch_to_locale( self::locale( self::normalize( $lang ) ) );
+	}
+
 	/** Locale for Montonio and SK dialogs. */
 	public static function montonio_locale( string $lang ): string {
 		return [ 'et' => 'et', 'ru' => 'ru', 'en' => 'en' ][ $lang ] ?? 'et';

@@ -1,0 +1,101 @@
+@use 'breakpoints' as *;
+
+.hero {
+	display: grid;
+	gap: var(--kp-space-6);
+	align-items: center;
+	padding: var(--kp-space-6) 0 var(--kp-space-7);
+
+	@media (min-width: $bp-wide) {
+		grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+		padding-top: var(--kp-space-7);
+	}
+
+	&__title {
+		max-width: 16ch;
+		margin: 0 0 var(--kp-space-4);
+		font: 500 var(--kp-text-3xl) / 1.08 var(--kp-font-display);
+	}
+
+	&__lead {
+		max-width: 46ch;
+		margin: 0 0 var(--kp-space-5);
+		font-size: var(--kp-text-l);
+		line-height: 1.5;
+		color: var(--kp-ink-soft);
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--kp-space-3);
+	}
+
+	&__map {
+		width: 100%;
+		max-width: 480px;
+		justify-self: center;
+	}
+}
+
+// Plot map: top view of cemetery quarters. One plot is "yours".
+.plot-map {
+	display: block;
+	width: 100%;
+	height: auto;
+
+	&__path {
+		fill: none;
+		stroke: var(--kp-lichen-deep);
+		stroke-width: 1;
+		stroke-dasharray: 3 4;
+	}
+
+	&__plot {
+		fill: var(--kp-paper);
+		stroke: var(--kp-lichen-deep);
+		stroke-width: 1;
+	}
+
+	&__tree {
+		fill: var(--kp-moss-wash);
+		stroke: var(--kp-lichen-deep);
+		stroke-width: 1;
+	}
+
+	&__sector {
+		fill: var(--kp-ink-soft);
+		font: 400 15px var(--kp-font-display);
+	}
+
+	&__mine {
+		fill: var(--kp-moss-wash);
+		stroke: var(--kp-moss);
+		stroke-width: 2;
+		stroke-dasharray: 120;
+		stroke-dashoffset: 120;
+		animation: plot-draw 1.4s 0.3s ease-out forwards;
+	}
+
+	&__mine-label {
+		fill: var(--kp-moss-deep);
+		font: 700 13px var(--kp-font-ui);
+	}
+
+	&__candle {
+		fill: var(--kp-candle);
+	}
+}
+
+@keyframes plot-draw {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.plot-map__mine {
+		animation: none;
+		stroke-dashoffset: 0;
+	}
+}

@@ -16,6 +16,9 @@ define( 'KIPORA_FILE', __FILE__ );
 define( 'KIPORA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'KIPORA_URL', plugin_dir_url( __FILE__ ) );
 
+// phpseclib for Smart-ID signature checks (RSA-PSS is not available in openssl_verify).
+require_once KIPORA_DIR . 'vendor/autoload.php';
+
 spl_autoload_register(
 	static function ( string $class ): void {
 		if ( ! str_starts_with( $class, 'Kipora\\' ) ) {

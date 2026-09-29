@@ -1,0 +1,35 @@
+.site-footer {
+	border-top: 1px solid var(--kp-lichen);
+	background: var(--kp-paper);
+	font-size: var(--kp-text-s);
+	color: var(--kp-ink-soft);
+
+	&__inner {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: var(--kp-space-4);
+		padding-top: var(--kp-space-6);
+		padding-bottom: var(--kp-space-6);
+	}
+
+	&__brand {
+		margin: 0 0 var(--kp-space-1);
+		color: var(--kp-ink);
+		font: 700 1.25rem / 1 var(--kp-font-display);
+		letter-spacing: 0.06em;
+	}
+
+	&__links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--kp-space-2) var(--kp-space-5);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		a {
+			color: var(--kp-ink-soft);
+		}
+	}
+}

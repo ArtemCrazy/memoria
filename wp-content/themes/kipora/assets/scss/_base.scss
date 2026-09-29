@@ -1,0 +1,45 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	background: var(--kp-mist);
+	color: var(--kp-ink);
+	font: 400 var(--kp-text-m) / 1.55 var(--kp-font-ui);
+	-webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+	max-width: 100%;
+	height: auto;
+}
+
+a {
+	color: var(--kp-moss);
+}
+
+:focus-visible {
+	outline: var(--kp-focus);
+	outline-offset: 2px;
+}
+
+.skip-link {
+	position: absolute;
+	top: -100px;
+	left: var(--kp-gutter);
+	padding: var(--kp-space-2) var(--kp-space-3);
+	background: var(--kp-paper);
+	z-index: 10;
+
+	&:focus {
+		top: var(--kp-space-2);
+	}
+}

@@ -1,0 +1,102 @@
+// Admin screens: orders, memorial cards, prices. WordPress admin look, only layout here.
+
+.kp-admin-num {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.kp-admin-dl {
+	display: grid;
+	grid-template-columns: 160px 1fr;
+	gap: 6px 16px;
+	margin: 16px 0;
+
+	dt {
+		font-weight: 600;
+	}
+
+	dd {
+		margin: 0;
+	}
+}
+
+.kp-admin-history {
+	margin: 0;
+	color: #50575e;
+}
+
+.kp-admin-status {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 4px;
+	background: #f0f0f1;
+
+	&--paid,
+	&--in_progress {
+		background: #fcf0d9;
+	}
+
+	&--done {
+		background: #e3efdc;
+	}
+
+	&--payment_failed,
+	&--cancelled {
+		background: #f6e0de;
+	}
+}
+
+.kp-admin-report {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+
+	&__images {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 8px;
+	}
+
+	&__image {
+		display: grid;
+		gap: 4px;
+		width: 120px;
+		font-size: 12px;
+		text-decoration: none;
+
+		img {
+			width: 120px;
+			height: 90px;
+			object-fit: cover;
+			border-radius: 4px;
+		}
+	}
+}
+
+.kp-admin-doc {
+	display: grid;
+	place-items: center;
+	width: 120px;
+	height: 90px;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	font-weight: 600;
+}
+
+.kp-admin-table {
+	margin-bottom: 8px;
+
+	td {
+		vertical-align: middle;
+	}
+
+	.small-text {
+		width: 5.5em;
+	}
+}
+
+.kp-admin-remove {
+	color: #b32d2e;
+}

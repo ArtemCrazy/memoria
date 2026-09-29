@@ -1,0 +1,13 @@
+.kp-contact {
+	.kp-upload__drop {
+		margin-bottom: var(--kp-space-4);
+	}
+
+	&__trap {
+		position: absolute;
+		left: -10000px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+}
