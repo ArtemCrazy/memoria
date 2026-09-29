@@ -31,5 +31,6 @@ if ( function_exists( 'PLL' ) && PLL() && PLL()->model ) {
 	PLL()->model->clean_languages_cache();
 }
 delete_transient( 'pll_languages_list' );
-flush_rewrite_rules();
+// Rebuilt on the next normal request, when Polylang adds language prefixes.
+delete_option( 'rewrite_rules' );
 echo "ok\n";

@@ -194,6 +194,16 @@ update_option( 'page_on_front', $map['home']['et'] );
 update_option( 'wp_page_for_privacy_policy', $map['privacy']['et'] );
 update_option( 'blogdescription', 'Kalmistu hooldus ja lemmikloomade mälestusteenused Tallinnas ja Harjumaal' );
 
+// Site tagline per language (Polylang string translations).
+$tagline = get_option( 'blogdescription' );
+foreach ( [ 'ru' => 'Уход за захоронениями и услуги памяти для питомцев в Таллине и Харьюмаа', 'en' => 'Grave care and pet memorial services in Tallinn and Harju County' ] as $slug => $translation ) {
+	$language = PLL()->model->get_language( $slug );
+	$mo       = new PLL_MO();
+	$mo->import_from_db( $language );
+	$mo->add_entry( $mo->make_entry( $tagline, $translation ) );
+	$mo->export_to_db( $language );
+}
+
 // 5. Menus per language. Polylang keeps the assignment in its own option:
 // polylang[nav_menus][theme][location][lang] = menu id.
 $locations = get_theme_mod( 'nav_menu_locations', [] );
@@ -226,7 +236,8 @@ $options                         = get_option( 'polylang' );
 $options['nav_menus']['kipora'] = $pll_menus;
 update_option( 'polylang', $options );
 
-flush_rewrite_rules();
+// Rebuilt on the next normal request, when Polylang adds language prefixes.
+delete_option( 'rewrite_rules' );
 $log( 'done' );
 foreach ( $functional as $key => $id ) {
 	$log( "{$key}: " . get_permalink( $id ) );

@@ -6,3 +6,8 @@
 	clip-path: inset(50%);
 	white-space: nowrap;
 }
+
+// Components set display: grid/flex, which would override the hidden attribute.
+[class][hidden] {
+	display: none;
+}

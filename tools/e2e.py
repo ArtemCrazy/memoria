@@ -60,6 +60,11 @@ s.cookies.set("beget", "begetok")
 anon = requests.Session()
 anon.cookies.set("beget", "begetok")
 
+# 0. Every language version of the key pages opens.
+for path in ["/", "/ru/", "/en/", "/hinnakalkulaator/", "/ru/kalkulyator/", "/en/calculator/", "/minu-konto/", "/ru/kabinet/", "/en/account/", "/kontakt/", "/ru/kontakty/", "/en/contact/"]:
+    r = anon.get(BASE + path, allow_redirects=False)
+    check(f"page {path} opens", r.status_code == 200, str(r.status_code))
+
 # 1. Login with Smart-ID DEMO.
 r = s.post(f"{BASE}/wp-json/kipora/v1/auth/start", json={"method": "smartid", "idcode": "40504040001", "lang": "et"})
 data = r.json()
