@@ -1,0 +1,6 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+# Secrets never live in the repo: see tools/deploy.py for where they come from.
+*.env
