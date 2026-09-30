@@ -37,11 +37,7 @@
 
 ## Фото
 
-Фото временные, из Wikimedia Commons под лицензией CC0, атрибуция не обязательна. Их заменят фото клиента.
-
-- `hero-lantern`: https://commons.wikimedia.org/wiki/File:020_Grave_candles.JPG
-- `card-grave`: https://commons.wikimedia.org/wiki/File:Grave_with_flowers.jpg
-- `card-pet`: https://commons.wikimedia.org/wiki/File:Ginger_cat_on_the_street05.jpg
+Три фотографии главного экрана (`hero-lantern`, `card-grave`, `card-pet`) сгенерированы для проекта 01.10.2026. В теме используются оптимизированные пары JPG/WebP. Изображения не являются фотографиями реальных объектов или животных клиента.
 
 ## Мобильная версия
 
