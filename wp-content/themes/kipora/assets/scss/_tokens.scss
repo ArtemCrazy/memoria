@@ -1,33 +1,39 @@
 // Design tokens. Every colour, size and radius on the site comes from here.
-// See docs/design.md for the reasoning.
+// Palette and type follow the reference the client approved for the home page
+// (sage paper, deep green ink, olive action colour, amber second accent).
 
 :root {
 	// Colour
-	--kp-ink: #26302e;
-	--kp-ink-soft: #56625e;
-	--kp-moss: #4c5f3a;
-	--kp-moss-deep: #3a4a2c;
-	--kp-moss-wash: #e6ecdf;
-	--kp-mist: #eef1ec;
-	--kp-paper: #fbfcfa;
-	--kp-lichen: #d5dccd;
-	--kp-lichen-deep: #a9b59e;
-	--kp-candle: #b7832f;
-	--kp-candle-wash: #f5ecdc;
+	--kp-ink: #223a28;
+	--kp-ink-soft: #4f6154;
+	--kp-moss: #32573b;
+	--kp-moss-deep: #223a28;
+	--kp-moss-wash: #f4ffd8;
+	--kp-accent: #6d910a;
+	--kp-mist: #eaefd1;
+	--kp-mist-light: #f1f4e2;
+	--kp-paper: #fcfdf6;
+	--kp-sticker: #ffffff;
+	--kp-lichen: #d6ddbb;
+	--kp-lichen-deep: #a6b38c;
+	--kp-candle: #976603;
+	--kp-candle-wash: #fff6d9;
 	--kp-error: #9b2c2c;
 	--kp-error-wash: #f6e5e3;
-	--kp-shadow: rgb(38 48 46 / 12%);
-	--kp-focus: 2px solid #2f5d8a;
+	--kp-shadow: rgb(34 58 40 / 14%);
+	--kp-focus: 2px solid #1f4f8f;
 
 	// Type
-	--kp-font-display: 'Alegreya', 'Georgia', serif;
-	--kp-font-ui: 'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--kp-font-display: 'KP Display', 'Georgia', serif;
+	--kp-font-ui: 'KP Text', system-ui, -apple-system, 'Segoe UI', sans-serif;
 	--kp-text-s: 0.875rem;
 	--kp-text-m: 1rem;
 	--kp-text-l: 1.25rem;
 	--kp-text-xl: 1.625rem;
 	--kp-text-2xl: 2.25rem;
-	--kp-text-3xl: clamp(2.25rem, 1.4rem + 3.2vw, 3.5rem);
+	--kp-text-3xl: clamp(2.5rem, 1.6rem + 3.6vw, 4rem);
+	--kp-text-hero: clamp(3.25rem, 2.2rem + 4.6vw, 7rem);
+	--kp-text-lead: clamp(1.25rem, 1.16rem + 0.39vw, 1.625rem);
 
 	// Space (4 px base)
 	--kp-space-1: 0.25rem;
@@ -42,8 +48,11 @@
 	// Shape and motion
 	--kp-radius-s: 6px;
 	--kp-radius-l: 12px;
+	--kp-radius-sticker: 22px;
+	--kp-radius-pill: 999px;
+	--kp-sticker-border: 8px;
 	--kp-fast: 150ms ease-out;
-	--kp-page: 1120px;
+	--kp-page: 1200px;
 	--kp-gutter: 16px;
 
 	@media (min-width: 600px) {

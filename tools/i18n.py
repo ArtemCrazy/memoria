@@ -280,13 +280,19 @@ T = {
         "Päris Smart-ID ja Mobiil-ID siin veel ei tööta. Kasutage testandmeid, sisselogimine kinnitatakse automaatselt.",
         "Настоящие Smart-ID и Mobiil-ID здесь пока не работают. Используйте тестовые данные, вход подтверждается автоматически.",
     ),
-    "My memorial cards": ("Minu mälestuskaardid", "Мои карточки памяти"),
     "Main menu": ("Peamenüü", "Главное меню"),
     "Footer menu": ("Jaluse menüü", "Меню в подвале"),
     "Skip to content": ("Liigu sisu juurde", "Перейти к содержимому"),
     "My account": ("Minu konto", "Личный кабинет"),
     "Page not found": ("Lehte ei leitud", "Страница не найдена"),
     "Go to the home page": ("Mine avalehele", "На главную"),
+    "Tallinn • Harju County • Photos before and after": ("Tallinn • Harjumaa • Fotod enne ja pärast", "Таллин • Харьюмаа • Фото до и после"),
+    "Grave lantern with a burning candle": ("Kalmulatern põleva küünlaga", "Кладбищенский фонарь с горящей свечой"),
+    "Once or for the whole season": ("Ühekordselt või terve hooaja", "Разово или на весь сезон"),
+    "Pets": ("Lemmikloomad", "Питомцы"),
+    "Cremation, urn and memorial page": ("Tuhastamine, urn ja mälestusleht", "Кремация, урна и страница памяти"),
+
+    "Menu": ("Menüü", "Меню"),
 }
 
 PATTERN = re.compile(r"(?:__|_e|esc_html__|esc_html_e|esc_attr__|esc_attr_e)\(\s*(['\"])((?:\\.|(?!\1).)*)\1\s*,\s*'kipora'")

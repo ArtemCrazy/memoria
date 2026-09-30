@@ -1,71 +1,157 @@
 @use 'breakpoints' as *;
 
+// Header sits on the page paper, no bar: the hero starts right under it.
+// Phones: brand, languages and a menu button; the menu opens as a panel.
+// Wide screens: the menu wrapper dissolves (display: contents) and its
+// children line up with the brand and languages in one row.
 .site-header {
-	border-bottom: 1px solid var(--kp-lichen);
-	background: var(--kp-paper);
+	position: relative;
+	z-index: 20;
+	background: var(--kp-mist);
 
 	&__inner {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: var(--kp-space-3) var(--kp-space-5);
+		gap: var(--kp-space-3) var(--kp-space-4);
 		min-height: 72px;
 		padding-top: var(--kp-space-3);
 		padding-bottom: var(--kp-space-3);
+
+		@media (min-width: $bp-wide) {
+			flex-wrap: nowrap;
+			gap: var(--kp-space-5);
+			min-height: 88px;
+		}
 	}
 
 	&__brand {
 		margin-right: auto;
 		color: var(--kp-ink);
-		font: 700 1.5rem / 1 var(--kp-font-display);
-		letter-spacing: 0.06em;
+		font: 400 2rem / 1 var(--kp-font-display);
+		letter-spacing: -0.01em;
 		text-decoration: none;
+	}
+
+	&__menu {
+		order: 5;
+		display: none;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--kp-space-5);
+		width: 100%;
+		padding: var(--kp-space-4) 0 var(--kp-space-6);
+
+		&.is-open {
+			display: flex;
+		}
+
+		@media (min-width: $bp-wide) {
+			display: contents;
+		}
 	}
 
 	&__account {
 		color: var(--kp-ink);
+		font-size: 1.125rem;
 		font-weight: 500;
+		white-space: nowrap;
 		text-decoration: none;
 
 		&:hover {
-			color: var(--kp-moss);
+			color: var(--kp-accent);
 		}
+
+		@media (min-width: $bp-wide) {
+			order: 2;
+			font-size: var(--kp-text-m);
+		}
+	}
+
+	&__cta {
+		@media (min-width: $bp-wide) {
+			order: 4;
+		}
+	}
+
+	&__toggle {
+		position: relative;
+		width: 44px;
+		height: 44px;
+		padding: 0;
+		border: 0;
+		background: none;
+		cursor: pointer;
+
+		@media (min-width: $bp-wide) {
+			display: none;
+		}
+	}
+
+	// Two bars drawn as geometry; they cross into an X when the menu is open.
+	&__toggle-line {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 26px;
+		height: 2px;
+		border-radius: 2px;
+		background: var(--kp-ink);
+		transform: translate(-50%, calc(-50% - 4px));
+		transition: transform var(--kp-fast);
+
+		&:nth-child(2) {
+			transform: translate(-50%, calc(-50% + 4px));
+		}
+	}
+
+	&__toggle[aria-expanded='true'] &__toggle-line {
+		transform: translate(-50%, -50%) rotate(45deg);
+	}
+
+	&__toggle[aria-expanded='true'] &__toggle-line:nth-child(2) {
+		transform: translate(-50%, -50%) rotate(-45deg);
 	}
 }
 
 .site-nav {
-	order: 3;
-	width: 100%;
-
 	@media (min-width: $bp-wide) {
-		order: 0;
-		width: auto;
+		order: 1;
+		margin: 0 auto;
 	}
 
 	&__list {
 		display: flex;
-		flex-wrap: wrap;
-		gap: var(--kp-space-2) var(--kp-space-5);
+		flex-direction: column;
+		gap: var(--kp-space-3);
 		margin: 0;
 		padding: 0;
 		list-style: none;
+
+		@media (min-width: $bp-wide) {
+			flex-direction: row;
+			gap: var(--kp-space-6);
+		}
 	}
 
 	a {
-		color: var(--kp-ink-soft);
+		color: var(--kp-ink);
+		font: 400 2.5rem / 1 var(--kp-font-display);
 		text-decoration: none;
+		transition: color var(--kp-fast);
 
 		&:hover {
-			color: var(--kp-ink);
+			color: var(--kp-accent);
+		}
+
+		@media (min-width: $bp-wide) {
+			font: 400 1.125rem / 1.2 var(--kp-font-ui);
 		}
 	}
 
 	.current-menu-item > a,
 	.current_page_item > a {
-		color: var(--kp-ink);
-		text-decoration: underline;
-		text-decoration-color: var(--kp-moss);
-		text-underline-offset: 6px;
+		color: var(--kp-accent);
 	}
 }
 
@@ -76,20 +162,24 @@
 	padding: 0;
 	list-style: none;
 
+	@media (min-width: $bp-wide) {
+		order: 3;
+	}
+
 	a {
-		display: block;
-		min-width: 32px;
-		padding: var(--kp-space-1) var(--kp-space-2);
-		border-radius: var(--kp-radius-s);
+		display: grid;
+		place-items: center;
+		min-width: 36px;
+		min-height: 36px;
+		border-radius: var(--kp-radius-pill);
 		color: var(--kp-ink-soft);
 		font-size: var(--kp-text-s);
-		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
 	}
 
 	.current-lang a {
-		background: var(--kp-mist);
+		background: var(--kp-mist-light);
 		color: var(--kp-ink);
 	}
 }

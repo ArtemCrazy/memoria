@@ -16,6 +16,18 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+// Paper grain over the whole page: flat sage looks like a screen, grain looks like print.
+body::after {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	background: url('../img/grain.png') repeat;
+	opacity: 0.35;
+	pointer-events: none;
+	mix-blend-mode: multiply;
+}
+
 img,
 svg {
 	max-width: 100%;

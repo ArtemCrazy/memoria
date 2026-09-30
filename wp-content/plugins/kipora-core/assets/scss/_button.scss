@@ -3,12 +3,13 @@
 	align-items: center;
 	justify-content: center;
 	gap: var(--kp-space-2);
-	min-height: 48px;
-	padding: 0 var(--kp-space-5);
-	border: 1px solid transparent;
-	border-radius: var(--kp-radius-s);
-	font: 500 var(--kp-text-m) / 1.2 var(--kp-font-ui);
+	min-height: 52px;
+	padding: 0 var(--kp-space-6);
+	border: 2px solid transparent;
+	border-radius: var(--kp-radius-pill);
+	font: 600 var(--kp-text-m) / 1.2 var(--kp-font-ui);
 	text-decoration: none;
+	white-space: nowrap;
 	cursor: pointer;
 	transition: background-color var(--kp-fast), border-color var(--kp-fast);
 
@@ -22,22 +23,31 @@
 		cursor: default;
 	}
 
+	// White on olive passes contrast only as large text, hence 19px bold.
 	&--primary {
-		background: var(--kp-moss);
-		color: var(--kp-paper);
+		background: var(--kp-accent);
+		color: var(--kp-sticker);
+		font-size: 1.1875rem;
+		font-weight: 700;
 
 		&:hover:not(:disabled) {
-			background: var(--kp-moss-deep);
+			background: var(--kp-ink);
 		}
 	}
 
+	&--large {
+		min-height: 64px;
+		padding: 0 var(--kp-space-7);
+	}
+
 	&--quiet {
-		border-color: var(--kp-lichen);
-		background: var(--kp-paper);
-		color: var(--kp-ink);
+		border-color: var(--kp-moss);
+		background: transparent;
+		color: var(--kp-moss);
 
 		&:hover {
-			border-color: var(--kp-moss);
+			background: var(--kp-moss);
+			color: var(--kp-sticker);
 		}
 	}
 

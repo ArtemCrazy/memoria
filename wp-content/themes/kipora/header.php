@@ -14,25 +14,33 @@
 	<div class="site-wrap site-header__inner">
 		<a class="site-header__brand" href="<?php echo esc_url( function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' ) ); ?>">KIPORA</a>
 
-		<nav class="site-nav" aria-label="<?php esc_attr_e( 'Main menu', 'kipora' ); ?>">
-			<?php
-			wp_nav_menu(
-				[
-					'theme_location' => 'primary',
-					'container'      => false,
-					'menu_class'     => 'site-nav__list',
-					'depth'          => 1,
-					'fallback_cb'    => false,
-				]
-			);
-			?>
-		</nav>
-
-		<a class="site-header__account" href="<?php echo esc_url( kipora_theme_page( 'account' ) ); ?>">
-			<?php echo is_user_logged_in() ? esc_html( wp_get_current_user()->first_name ?: __( 'My account', 'kipora' ) ) : esc_html__( 'My account', 'kipora' ); ?>
-		</a>
+		<div class="site-header__menu" id="site-menu" data-site-menu>
+			<nav class="site-nav" aria-label="<?php esc_attr_e( 'Main menu', 'kipora' ); ?>">
+				<?php
+				wp_nav_menu(
+					[
+						'theme_location' => 'primary',
+						'container'      => false,
+						'menu_class'     => 'site-nav__list',
+						'depth'          => 1,
+						'fallback_cb'    => false,
+					]
+				);
+				?>
+			</nav>
+			<a class="site-header__account" href="<?php echo esc_url( kipora_theme_page( 'account' ) ); ?>">
+				<?php echo is_user_logged_in() ? esc_html( wp_get_current_user()->first_name ?: __( 'My account', 'kipora' ) ) : esc_html__( 'My account', 'kipora' ); ?>
+			</a>
+			<a class="kp-button kp-button--primary site-header__cta" href="<?php echo esc_url( kipora_theme_page( 'calculator' ) ); ?>"><?php esc_html_e( 'Calculate the price', 'kipora' ); ?></a>
+		</div>
 
 		<?php kipora_theme_languages(); ?>
+
+		<button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-site-menu-toggle>
+			<span class="site-header__toggle-line"></span>
+			<span class="site-header__toggle-line"></span>
+			<span class="kp-visually-hidden"><?php esc_html_e( 'Menu', 'kipora' ); ?></span>
+		</button>
 	</div>
 </header>
 

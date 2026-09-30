@@ -1,101 +1,256 @@
 @use 'breakpoints' as *;
 
+// Four-lobed "flower" window for card photos, drawn as geometry (four circles and a square).
+$flower-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='30' cy='30' r='30'/%3E%3Ccircle cx='70' cy='30' r='30'/%3E%3Ccircle cx='30' cy='70' r='30'/%3E%3Ccircle cx='70' cy='70' r='30'/%3E%3Crect x='20' y='20' width='60' height='60'/%3E%3C/svg%3E");
+
 .hero {
-	display: grid;
-	gap: var(--kp-space-6);
-	align-items: center;
+	position: relative;
 	padding: var(--kp-space-6) 0 var(--kp-space-7);
+	text-align: center;
+	// Leaves and the line reach past the edges; the page must not scroll sideways.
+	overflow-x: clip;
 
 	@media (min-width: $bp-wide) {
-		grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
 		padding-top: var(--kp-space-7);
 	}
 
+	&__head {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--kp-space-5);
+	}
+
+	&__features {
+		margin: 0;
+		font: 500 var(--kp-text-m) / 1.2 var(--kp-font-ui);
+
+		@media (min-width: $bp-mid) {
+			font-size: var(--kp-text-l);
+		}
+
+		letter-spacing: -0.01em;
+	}
+
+	&__divider {
+		display: block;
+		width: 69px;
+		height: 6px;
+		margin-top: calc(-1 * var(--kp-space-3));
+		color: var(--kp-accent);
+	}
+
 	&__title {
-		max-width: 16ch;
-		margin: 0 0 var(--kp-space-4);
-		font: 500 var(--kp-text-3xl) / 1.08 var(--kp-font-display);
+		max-width: 10.5em;
+		margin: 0;
+		font: 400 var(--kp-text-hero) / 0.9 var(--kp-font-display);
+		letter-spacing: -0.035em;
+		// The display face is a single light weight; a hairline stroke gives it the reference's density.
+		-webkit-text-stroke: 0.02em currentColor;
+		text-wrap: balance;
+
+		em {
+			font-style: italic;
+		}
 	}
 
 	&__lead {
-		max-width: 46ch;
-		margin: 0 0 var(--kp-space-5);
-		font-size: var(--kp-text-l);
-		line-height: 1.5;
-		color: var(--kp-ink-soft);
+		max-width: 34ch;
+		margin: 0;
+		font: 500 var(--kp-text-lead) / 1.25 var(--kp-font-ui);
+		letter-spacing: -0.02em;
+		text-wrap: balance;
 	}
 
-	&__actions {
+	&__stage {
+		position: relative;
+		isolation: isolate;
 		display: flex;
-		flex-wrap: wrap;
+		justify-content: center;
+		width: min(100%, 460px);
+		margin: var(--kp-space-7) auto 0;
+	}
+
+	&__line {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: -1;
+		width: 100vw;
+		max-width: none;
+		height: auto;
+		transform: translate(-50%, -50%);
+		color: var(--kp-sticker);
+		pointer-events: none;
+	}
+
+	&__line-path {
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+		animation: hero-draw 2.2s 0.4s ease-out forwards;
+	}
+
+	&__photo {
+		display: block;
+		width: 82%;
+		padding: var(--kp-sticker-border);
+		border-radius: var(--kp-radius-pill) var(--kp-radius-pill) var(--kp-radius-sticker) var(--kp-radius-sticker);
+		background: var(--kp-sticker);
+		box-shadow: 0 18px 40px var(--kp-shadow);
+		transform: rotate(-2.5deg);
+
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+			border-radius: var(--kp-radius-pill) var(--kp-radius-pill) calc(var(--kp-radius-sticker) - var(--kp-sticker-border)) calc(var(--kp-radius-sticker) - var(--kp-sticker-border));
+		}
+	}
+
+	&__leaf {
+		position: absolute;
+		display: block;
+		height: auto;
+
+		&--1 {
+			top: 8%;
+			left: -6%;
+			width: 18%;
+			color: var(--kp-accent);
+			transform: rotate(-28deg);
+		}
+
+		&--2 {
+			top: 58%;
+			left: -2%;
+			width: 9%;
+			color: var(--kp-moss);
+			transform: rotate(18deg);
+		}
+
+		&--3 {
+			top: 2%;
+			right: -9%;
+			width: 22%;
+			color: var(--kp-candle);
+			transform: rotate(32deg);
+		}
+
+		&--4 {
+			bottom: 18%;
+			right: -4%;
+			width: 10%;
+			color: var(--kp-accent);
+			transform: rotate(-12deg);
+		}
+	}
+
+	&__cards {
+		display: flex;
+		justify-content: center;
 		gap: var(--kp-space-3);
+		margin-top: var(--kp-space-6);
+	}
+}
+
+// On wide screens the cards leave the flow and stick to the sides of the stage, like in the reference.
+@media (min-width: $bp-wide) {
+	.hero__cards {
+		margin: 0;
 	}
 
-	&__map {
+	.hero-card--grave {
+		position: absolute;
+		top: 58%;
+		left: 0;
+	}
+
+	.hero-card--pet {
+		position: absolute;
+		right: 0;
+		bottom: 9%;
+	}
+}
+
+.hero-card {
+	display: flex;
+	flex: 1 1 0;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--kp-space-2);
+	min-width: 0;
+	max-width: 15rem;
+	padding: var(--kp-space-3) var(--kp-space-3) var(--kp-space-4);
+
+	@media (min-width: $bp-mid) {
+		gap: var(--kp-space-3);
+		padding: var(--kp-space-4) var(--kp-space-4) var(--kp-space-5);
+	}
+	border: 2px solid var(--kp-accent);
+	border-radius: 2rem;
+	background: var(--kp-moss-wash);
+	color: var(--kp-moss);
+	text-align: center;
+	text-decoration: none;
+	transform: rotate(-4deg);
+	transition: transform var(--kp-fast);
+
+	&:hover {
+		transform: rotate(0deg);
+	}
+
+	&--pet {
+		border-color: var(--kp-candle);
+		background: var(--kp-candle-wash);
+		color: var(--kp-candle);
+		transform: rotate(3deg);
+	}
+
+	&__photo {
+		display: block;
 		width: 100%;
-		max-width: 480px;
-		justify-self: center;
+		-webkit-mask: $flower-mask center / contain no-repeat;
+		mask: $flower-mask center / contain no-repeat;
+
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	&__title {
+		font: italic 400 1.375rem / 1 var(--kp-font-display);
+
+		@media (min-width: $bp-mid) {
+			font-size: 1.75rem;
+		}
+	}
+
+	&__text {
+		font-size: var(--kp-text-s);
+		line-height: 1.35;
+		letter-spacing: -0.02em;
+
+		@media (min-width: $bp-mid) {
+			font-size: 1.0625rem;
+		}
 	}
 }
 
-// Plot map: top view of cemetery quarters. One plot is "yours".
-.plot-map {
-	display: block;
-	width: 100%;
-	height: auto;
-
-	&__path {
-		fill: none;
-		stroke: var(--kp-lichen-deep);
-		stroke-width: 1;
-		stroke-dasharray: 3 4;
-	}
-
-	&__plot {
-		fill: var(--kp-paper);
-		stroke: var(--kp-lichen-deep);
-		stroke-width: 1;
-	}
-
-	&__tree {
-		fill: var(--kp-moss-wash);
-		stroke: var(--kp-lichen-deep);
-		stroke-width: 1;
-	}
-
-	&__sector {
-		fill: var(--kp-ink-soft);
-		font: 400 15px var(--kp-font-display);
-	}
-
-	&__mine {
-		fill: var(--kp-moss-wash);
-		stroke: var(--kp-moss);
-		stroke-width: 2;
-		stroke-dasharray: 120;
-		stroke-dashoffset: 120;
-		animation: plot-draw 1.4s 0.3s ease-out forwards;
-	}
-
-	&__mine-label {
-		fill: var(--kp-moss-deep);
-		font: 700 13px var(--kp-font-ui);
-	}
-
-	&__candle {
-		fill: var(--kp-candle);
-	}
-}
-
-@keyframes plot-draw {
+@keyframes hero-draw {
 	to {
 		stroke-dashoffset: 0;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.plot-map__mine {
+	.hero__line-path {
 		animation: none;
 		stroke-dashoffset: 0;
+	}
+
+	.hero-card {
+		transition: none;
 	}
 }

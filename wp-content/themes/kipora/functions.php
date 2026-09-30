@@ -26,13 +26,15 @@ add_action(
 	static function (): void {
 		$css = get_theme_file_path( 'assets/css/theme.css' );
 		wp_enqueue_style( 'kipora-theme', get_theme_file_uri( 'assets/css/theme.css' ), [], is_file( $css ) ? (string) filemtime( $css ) : '0.1.0' );
+		wp_enqueue_script( 'kipora-theme', get_theme_file_uri( 'assets/js/theme.js' ), [], (string) filemtime( get_theme_file_path( 'assets/js/theme.js' ) ), [ 'in_footer' => true, 'strategy' => 'defer' ] );
 	}
 );
 
 add_action(
 	'wp_head',
 	static function (): void {
-		foreach ( [ 'onest-latin', 'alegreya-latin' ] as $font ) {
+		$fonts = str_starts_with( determine_locale(), 'ru' ) ? [ 'oranienbaum-cyrillic', 'onest-cyrillic' ] : [ 'instrument-serif-latin', 'instrument-sans-latin' ];
+		foreach ( $fonts as $font ) {
 			echo '<link rel="preload" href="' . esc_url( get_theme_file_uri( "assets/fonts/{$font}.woff2" ) ) . '" as="font" type="font/woff2" crossorigin>' . "\n";
 		}
 	},
@@ -54,6 +56,29 @@ add_action(
  */
 function kipora_theme_page( string $key ): string {
 	return class_exists( 'Kipora\\Lang' ) ? Kipora\Lang::page_url( $key ) : home_url( '/' );
+}
+
+/**
+ * "Hoolitseme *puhkepaiga* eest" → escaped text with <em> around starred words.
+ * Lets the client set the italic accents of the hero headline from the page title.
+ */
+function kipora_theme_emphasis( string $title ): string {
+	return preg_replace( '/\*([^*]+)\*/u', '<em>$1</em>', esc_html( wp_strip_all_tags( $title ) ) );
+}
+
+// Asterisks are markup for the hero only: keep them out of the browser tab and menus.
+add_filter(
+	'document_title_parts',
+	static function ( array $parts ): array {
+		$parts['title'] = str_replace( '*', '', (string) ( $parts['title'] ?? '' ) );
+		return $parts;
+	}
+);
+add_filter( 'nav_menu_item_title', static fn( string $title ): string => str_replace( '*', '', $title ) );
+
+/** Calculator link with a direction already chosen (same format the calculator writes). */
+function kipora_theme_selection( string $direction ): string {
+	return rtrim( strtr( base64_encode( (string) wp_json_encode( [ 'direction' => $direction ] ) ), '+/', '-_' ), '=' );
 }
 
 /** Language links ET / RU / EN (Polylang). */
