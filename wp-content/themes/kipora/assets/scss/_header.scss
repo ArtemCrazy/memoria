@@ -14,14 +14,13 @@
 		flex-wrap: wrap;
 		align-items: center;
 		gap: var(--kp-space-3) var(--kp-space-4);
-		min-height: 72px;
+		min-height: var(--kp-header-h);
 		padding-top: var(--kp-space-3);
 		padding-bottom: var(--kp-space-3);
 
 		@media (min-width: $bp-wide) {
 			flex-wrap: nowrap;
 			gap: var(--kp-space-5);
-			min-height: 88px;
 		}
 	}
 

@@ -54,8 +54,13 @@
 	--kp-fast: 150ms ease-out;
 	--kp-page: 1200px;
 	--kp-gutter: 16px;
+	--kp-header-h: 72px;
 
 	@media (min-width: 600px) {
 		--kp-gutter: 32px;
+	}
+
+	@media (min-width: 880px) {
+		--kp-header-h: 88px;
 	}
 }
