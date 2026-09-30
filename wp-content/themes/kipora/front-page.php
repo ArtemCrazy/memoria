@@ -7,7 +7,7 @@
 defined( 'ABSPATH' ) || exit;
 
 $calculator = kipora_theme_page( 'calculator' );
-$img        = static fn( string $name ): string => get_theme_file_uri( "assets/img/{$name}" );
+$img        = static fn( string $name ): string => add_query_arg( 'v', (string) filemtime( get_theme_file_path( "assets/img/{$name}" ) ), get_theme_file_uri( "assets/img/{$name}" ) );
 
 get_header();
 while ( have_posts() ) :
