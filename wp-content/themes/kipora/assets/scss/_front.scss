@@ -7,8 +7,6 @@ $flower-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 	position: relative;
 	padding: var(--kp-space-6) 0 var(--kp-space-7);
 	text-align: center;
-	// Leaves and the line reach past the edges; the page must not scroll sideways.
-	overflow-x: clip;
 
 	@media (min-width: $bp-wide) {
 		padding-top: var(--kp-space-7);

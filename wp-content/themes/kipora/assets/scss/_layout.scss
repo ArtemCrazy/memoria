@@ -6,5 +6,9 @@
 }
 
 .site-main {
+	// Decor (hero line, leaves, tilted cards) may cross the content edge but never the window:
+	// clip at full width so nothing is cut early and the page does not scroll sideways.
+	flex: 1 0 auto;
+	overflow-x: clip;
 	padding: var(--kp-space-6) 0 var(--kp-space-8);
 }

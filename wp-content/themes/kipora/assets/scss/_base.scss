@@ -8,7 +8,12 @@ html {
 	-webkit-text-size-adjust: 100%;
 }
 
+// Column layout keeps the footer at the bottom of the window on short pages
+// (calculator before a choice, empty account). The admin bar height is subtracted when it shows.
 body {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100svh - var(--wp-admin--admin-bar--height, 0px));
 	margin: 0;
 	background: var(--kp-mist);
 	color: var(--kp-ink);
