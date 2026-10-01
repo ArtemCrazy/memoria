@@ -8,6 +8,12 @@ defined( 'ABSPATH' ) || exit;
 
 $calculator = kipora_theme_page( 'calculator' );
 $img        = static fn( string $name ): string => add_query_arg( 'v', (string) filemtime( get_theme_file_path( "assets/img/{$name}" ) ), get_theme_file_uri( "assets/img/{$name}" ) );
+$leaves     = [
+	[ 'blade' => 'M19 76C13 68 7 59 5 48 2 33 7 16 24 4c8 11 12 25 11 38-1 14-8 27-16 34Z', 'vein' => 'M19 74c-3-19-1-40 5-63', 'branches' => 'M17 57c-5-3-8-7-10-13m11 1c7-4 12-10 16-17M19 32c-4-3-7-7-9-12' ],
+	[ 'blade' => 'M18 77C10 66 7 53 9 41c2-15 10-28 21-37 3 16 2 35-4 49-3 10-6 17-8 24Z', 'vein' => 'M18 75c-2-20 3-43 11-64', 'branches' => 'M17 58c-4-4-7-10-8-16m11 2c5-4 8-9 11-15M23 30c-3-3-4-7-5-11' ],
+	[ 'blade' => 'M18 77C10 67 5 57 4 44 3 28 13 12 31 3c6 16 8 32 4 45-4 13-10 22-17 29Z', 'vein' => 'M18 75c0-23 6-44 14-65', 'branches' => 'M17 58c-6-3-9-8-12-14m15 1c7-4 12-10 15-17M24 30c-5-3-8-7-10-12' ],
+	[ 'blade' => 'M19 77C11 65 7 50 9 36c2-14 9-24 18-32 7 15 8 29 4 43-3 12-7 22-12 30Z', 'vein' => 'M19 75c-2-22 2-43 8-64', 'branches' => 'M17 58c-4-4-7-9-8-15m10 1c6-4 10-9 13-15M22 31c-3-3-5-7-6-11' ],
+];
 
 get_header();
 while ( have_posts() ) :
@@ -31,8 +37,8 @@ while ( have_posts() ) :
 					<source srcset="<?php echo esc_url( $img( 'hero-lantern.webp' ) ); ?>" type="image/webp">
 					<img src="<?php echo esc_url( $img( 'hero-lantern.jpg' ) ); ?>" width="760" height="950" alt="<?php esc_attr_e( 'Grave lantern with a burning candle', 'kipora' ); ?>" fetchpriority="high">
 				</picture>
-				<?php foreach ( [ 1, 2, 3, 4 ] as $n ) : ?>
-					<svg class="hero__leaf hero__leaf--<?php echo (int) $n; ?>" viewBox="0 0 40 80" aria-hidden="true" focusable="false"><path d="M20 2C34 18 38 44 20 78 2 44 6 18 20 2Z" fill="currentColor"/><path d="M20 10v62" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/></svg>
+				<?php foreach ( $leaves as $index => $leaf ) : ?>
+					<svg class="hero__leaf hero__leaf--<?php echo (int) ( $index + 1 ); ?>" viewBox="0 0 40 80" aria-hidden="true" focusable="false"><path d="<?php echo esc_attr( $leaf['blade'] ); ?>" fill="currentColor"/><path d="<?php echo esc_attr( $leaf['vein'] ); ?>" fill="none" stroke="#fff" stroke-opacity=".58" stroke-width="1.3" stroke-linecap="round"/><path d="<?php echo esc_attr( $leaf['branches'] ); ?>" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width=".8" stroke-linecap="round"/></svg>
 				<?php endforeach; ?>
 			</div>
 
