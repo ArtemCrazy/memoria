@@ -21,29 +21,35 @@ while ( have_posts() ) :
 	?>
 	<section class="hero" aria-labelledby="hero-title">
 		<div class="hero__head">
-			<p class="hero__features"><?php esc_html_e( 'Tallinn • Harju County • Photos before and after', 'kipora' ); ?></p>
-			<svg class="hero__divider" viewBox="0 0 69 6" aria-hidden="true" focusable="false"><path d="M1 3c5.7-3 11.3 3 17 0s11.3-3 17 0 11.3 3 17 0 11.3-3 16 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-			<h1 class="hero__title" id="hero-title"><?php echo kipora_theme_emphasis( get_the_title() ); // phpcs:ignore WordPress.Security.EscapeOutput — escaped inside ?></h1>
+			<p class="hero__features" data-reveal="fade-up"><?php esc_html_e( 'Tallinn • Harju County • Photos before and after', 'kipora' ); ?></p>
+			<svg data-reveal="fade-in" style="--reveal-delay:.1s" class="hero__divider" viewBox="0 0 69 6" aria-hidden="true" focusable="false"><path d="M1 3c5.7-3 11.3 3 17 0s11.3-3 17 0 11.3 3 17 0 11.3-3 16 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+			<h1 class="hero__title" id="hero-title" data-reveal="heading" style="--reveal-delay:.15s"><?php echo kipora_theme_emphasis( get_the_title() ); // phpcs:ignore WordPress.Security.EscapeOutput — escaped inside ?></h1>
 			<?php if ( has_excerpt() ) : ?>
-				<p class="hero__lead"><?php echo esc_html( get_the_excerpt() ); ?></p>
+				<p class="hero__lead" data-reveal="fade-up" style="--reveal-delay:.45s"><?php echo esc_html( get_the_excerpt() ); ?></p>
 			<?php endif; ?>
-			<a class="kp-button kp-button--primary kp-button--large hero__cta" href="<?php echo esc_url( $calculator ); ?>"><?php esc_html_e( 'Calculate the price', 'kipora' ); ?></a>
+			<a data-reveal="fade-up" style="--reveal-delay:.55s" class="kp-button kp-button--primary kp-button--large hero__cta" href="<?php echo esc_url( $calculator ); ?>"><?php esc_html_e( 'Calculate the price', 'kipora' ); ?></a>
 		</div>
 
 		<div class="hero__stage">
 			<svg class="hero__line" viewBox="0 0 1920 800" fill="none" aria-hidden="true" focusable="false"><path class="hero__line-path" pathLength="1" d="M-20 520c170-110 250-270 420-190s110 300 290 250 190-300 330-280 150 250 280 190 220-280 360-230 170 260 280 170" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg>
 			<div class="hero__figure">
-				<picture class="hero__photo">
-					<source srcset="<?php echo esc_url( $img( 'hero-lantern.webp' ) ); ?>" type="image/webp">
-					<img src="<?php echo esc_url( $img( 'hero-lantern.jpg' ) ); ?>" width="760" height="950" alt="<?php esc_attr_e( 'Grave lantern with a burning candle', 'kipora' ); ?>" fetchpriority="high">
-				</picture>
+				<div class="hero__photo" data-reveal="pop" style="--reveal-delay:.6s">
+					<picture class="hero__still">
+						<source srcset="<?php echo esc_url( $img( 'hero-lantern.webp' ) ); ?>" type="image/webp">
+						<img src="<?php echo esc_url( $img( 'hero-lantern.jpg' ) ); ?>" width="760" height="950" alt="<?php esc_attr_e( 'Grave lantern with a burning candle', 'kipora' ); ?>" fetchpriority="high">
+					</picture>
+					<video class="hero__video" autoplay muted loop playsinline preload="auto" aria-hidden="true" poster="<?php echo esc_url( $img( 'hero-lantern.jpg' ) ); ?>">
+						<source src="<?php echo esc_url( kipora_theme_asset( 'video/hero-lantern.webm' ) ); ?>" type="video/webm">
+						<source src="<?php echo esc_url( kipora_theme_asset( 'video/hero-lantern.mp4' ) ); ?>" type="video/mp4">
+					</video>
+				</div>
 				<?php foreach ( $leaves as $index => $leaf ) : ?>
-					<svg class="hero__leaf hero__leaf--<?php echo (int) ( $index + 1 ); ?>" viewBox="0 0 40 80" aria-hidden="true" focusable="false"><path d="<?php echo esc_attr( $leaf['blade'] ); ?>" fill="currentColor"/><path d="<?php echo esc_attr( $leaf['vein'] ); ?>" fill="none" stroke="#fff" stroke-opacity=".58" stroke-width="1.3" stroke-linecap="round"/><path d="<?php echo esc_attr( $leaf['branches'] ); ?>" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width=".8" stroke-linecap="round"/></svg>
+					<svg data-reveal="fade-in" style="--reveal-delay:<?php echo esc_attr( 1 + $index * 0.1 ); ?>s" class="hero__leaf hero__leaf--<?php echo (int) ( $index + 1 ); ?>" viewBox="0 0 40 80" aria-hidden="true" focusable="false"><path d="<?php echo esc_attr( $leaf['blade'] ); ?>" fill="currentColor"/><path d="<?php echo esc_attr( $leaf['vein'] ); ?>" fill="none" stroke="#fff" stroke-opacity=".58" stroke-width="1.3" stroke-linecap="round"/><path d="<?php echo esc_attr( $leaf['branches'] ); ?>" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width=".8" stroke-linecap="round"/></svg>
 				<?php endforeach; ?>
 			</div>
 
 			<div class="hero__cards">
-				<a class="hero-card hero-card--grave" href="<?php echo esc_url( add_query_arg( 'sel', kipora_theme_selection( 'grave' ), $calculator ) ); ?>">
+				<a data-reveal="fade-up" style="--reveal-delay:1s" class="hero-card hero-card--grave" href="<?php echo esc_url( add_query_arg( 'sel', kipora_theme_selection( 'grave' ), $calculator ) ); ?>">
 					<picture class="hero-card__photo">
 						<source srcset="<?php echo esc_url( $img( 'card-grave.webp' ) ); ?>" type="image/webp">
 						<img src="<?php echo esc_url( $img( 'card-grave.jpg' ) ); ?>" width="560" height="560" alt="" loading="lazy">
@@ -53,7 +59,7 @@ while ( have_posts() ) :
 						<span class="hero-card__text"><?php esc_html_e( 'Once or for the whole season', 'kipora' ); ?></span>
 					</span>
 				</a>
-				<a class="hero-card hero-card--pet" href="<?php echo esc_url( add_query_arg( 'sel', kipora_theme_selection( 'pet' ), $calculator ) ); ?>">
+				<a data-reveal="fade-up" style="--reveal-delay:1.2s" class="hero-card hero-card--pet" href="<?php echo esc_url( add_query_arg( 'sel', kipora_theme_selection( 'pet' ), $calculator ) ); ?>">
 					<picture class="hero-card__photo">
 						<source srcset="<?php echo esc_url( $img( 'card-pet.webp' ) ); ?>" type="image/webp">
 						<img src="<?php echo esc_url( $img( 'card-pet.jpg' ) ); ?>" width="560" height="560" alt="" loading="lazy">

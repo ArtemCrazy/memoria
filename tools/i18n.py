@@ -302,8 +302,6 @@ T = {
     'A heavy feeling on memorial days': ('Raske tunne mälestuspäevadel', 'Тяжело на душе в памятные даты'),
     '*Memory does not depend on distance.* The plot can be cared for even when you are on the other side of the world.': ('*Mälestus ei sõltu kaugusest.* Plats võib olla korras ka siis, kui olete teisel pool maailma.', '*Память не зависит от расстояния.* Участок может быть в порядке, даже когда вы на другом конце света.'),
     'How it *works*': ('Kuidas see *käib*', 'Как это *устроено*'),
-    'Everything happens online: the price, the payment and the photos.': ('Kõik toimub veebis: hind, makse ja fotod.', 'Всё онлайн: цена, оплата и фото.'),
-    'No need to call or wait for an offer. The price is visible before you pay.': ('Ei pea helistama ega pakkumist ootama. Hind on näha enne maksmist.', 'Не нужно звонить и ждать предложения. Цену видно до оплаты.'),
     'Four steps': ('Neli sammu', 'Четыре шага'),
     'Choose the service, plot size and cemetery. The price appears right away.': ('Valige teenus, platsi suurus ja kalmistu. Hind on kohe näha.', 'Выберите услугу, размер участка и кладбище. Цена появится сразу.'),
     'Person choosing a service on a phone': ('Inimene valib telefonis teenust', 'Человек выбирает услугу в телефоне'),

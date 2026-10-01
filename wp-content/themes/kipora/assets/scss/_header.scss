@@ -5,9 +5,16 @@
 // Wide screens: the menu wrapper dissolves (display: contents) and its
 // children line up with the brand and languages in one row.
 .site-header {
-	position: relative;
+	// Stays on top while the page scrolls; the admin bar, when shown, sits above it.
+	position: sticky;
+	top: var(--wp-admin--admin-bar--height, 0px);
 	z-index: 20;
 	background: var(--kp-mist);
+	transition: box-shadow var(--kp-fast);
+
+	&.is-scrolled {
+		box-shadow: 0 1px 0 var(--kp-lichen), 0 8px 24px var(--kp-shadow);
+	}
 
 	&__inner {
 		display: flex;
@@ -180,5 +187,11 @@
 	.current-lang a {
 		background: var(--kp-mist-light);
 		color: var(--kp-ink);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.site-header {
+		transition: none;
 	}
 }

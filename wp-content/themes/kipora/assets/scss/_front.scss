@@ -98,21 +98,43 @@ $figure-ratio: calc((760 + 16) / (950 + 16));
 	}
 
 	&__photo {
+		position: relative;
 		display: block;
 		width: 100%;
 		height: 100%;
-		padding: var(--kp-sticker-border);
 		border-radius: var(--kp-radius-pill) var(--kp-radius-pill) var(--kp-radius-sticker) var(--kp-radius-sticker);
 		background: var(--kp-sticker);
 		box-shadow: 0 18px 40px var(--kp-shadow);
 		transform: rotate(-2.5deg);
+	}
 
-		img {
-			display: block;
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			border-radius: var(--kp-radius-pill) var(--kp-radius-pill) calc(var(--kp-radius-sticker) - var(--kp-sticker-border)) calc(var(--kp-radius-sticker) - var(--kp-sticker-border));
+	// The still photo and the candle loop fill the same window inside the white border;
+	// the video covers the photo once it plays.
+	&__still,
+	&__video {
+		position: absolute;
+		inset: var(--kp-sticker-border);
+		display: block;
+		overflow: hidden;
+		border-radius: var(--kp-radius-pill) var(--kp-radius-pill) calc(var(--kp-radius-sticker) - var(--kp-sticker-border)) calc(var(--kp-radius-sticker) - var(--kp-sticker-border));
+	}
+
+	&__still img,
+	&__video {
+		width: calc(100% - 2 * var(--kp-sticker-border));
+		height: calc(100% - 2 * var(--kp-sticker-border));
+		object-fit: cover;
+	}
+
+	&__still img {
+		width: 100%;
+		height: 100%;
+	}
+
+	// People who ask for less motion get the still photo.
+	@media (prefers-reduced-motion: reduce) {
+		&__video {
+			display: none;
 		}
 	}
 

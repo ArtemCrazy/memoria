@@ -41,6 +41,17 @@ add_action(
 	2
 );
 
+// Entrance animations hide blocks only when JS runs and motion is welcome.
+// If theme.js never arrives, everything is shown after 3 seconds.
+add_action(
+	'wp_head',
+	static function (): void {
+		echo "<script>(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.documentElement.classList.add('has-reveal');setTimeout(function(){if(!window.kpRevealReady)d.documentElement.classList.remove('has-reveal');},3000);})(document);</script>
+";
+	},
+	1
+);
+
 // The block library styles are not used: content is styled by the theme.
 add_action(
 	'wp_enqueue_scripts',
@@ -90,6 +101,12 @@ function kipora_theme_image( string $name, string $fallback = '' ): array {
 		return add_query_arg( 'v', is_file( $path ) ? (string) filemtime( $path ) : '0', get_theme_file_uri( "assets/img/{$file}" ) );
 	};
 	return [ $url( "{$name}.jpg" ), $url( "{$name}.webp" ) ];
+}
+
+/** URL of any theme asset, versioned by file time. */
+function kipora_theme_asset( string $rel ): string {
+	$path = get_theme_file_path( "assets/{$rel}" );
+	return add_query_arg( 'v', is_file( $path ) ? (string) filemtime( $path ) : '0', get_theme_file_uri( "assets/{$rel}" ) );
 }
 
 /** Calculator link with a direction already chosen (same format the calculator writes). */

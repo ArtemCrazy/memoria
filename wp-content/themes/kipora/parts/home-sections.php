@@ -12,7 +12,7 @@ $contact    = kipora_theme_page( 'contact' );
 $divider    = '<svg class="section-head__divider" viewBox="0 0 69 6" aria-hidden="true" focusable="false"><path d="M1 3c5.7-3 11.3 3 17 0s11.3-3 17 0 11.3 3 17 0 11.3-3 16 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
 $heading    = static function ( string $tag, string $id, string $text, string $class = '' ) use ( $divider ): void {
 	printf(
-		'<header class="section-head %1$s">%2$s<%3$s class="section-head__title" id="%4$s">%5$s</%3$s></header>',
+		'<header class="section-head %1$s"><span data-reveal="fade-in">%2$s</span><%3$s class="section-head__title" id="%4$s" data-reveal="heading">%5$s</%3$s></header>',
 		esc_attr( $class ),
 		$divider, // phpcs:ignore WordPress.Security.EscapeOutput — static SVG
 		esc_attr( $tag ),
@@ -35,7 +35,7 @@ $picture = static function ( string $name, string $fallback, string $class, stri
 ?>
 
 <section class="problem" aria-labelledby="problem-title">
-	<div class="problem__media">
+	<div class="problem__media" data-reveal="fade-up">
 		<?php $picture( 'section-problem', 'card-grave', 'problem__photo', __( 'A grave plot overgrown with leaves and weeds', 'kipora' ), 560, 600 ); ?>
 		<?php foreach ( [ 1, 2 ] as $n ) : ?>
 			<svg class="problem__leaf problem__leaf--<?php echo (int) $n; ?>" viewBox="0 0 40 80" aria-hidden="true" focusable="false"><path d="M20 2C34 18 38 44 20 78 2 44 6 18 20 2Z" fill="currentColor"/></svg>
@@ -43,7 +43,7 @@ $picture = static function ( string $name, string $fallback, string $class, stri
 	</div>
 	<div class="problem__content">
 		<?php $heading( 'h2', 'problem-title', __( 'Usually it goes *like this*', 'kipora' ) ); ?>
-		<ol class="numbered" role="list">
+		<ol class="numbered" role="list" data-reveal="stagger">
 			<?php
 			foreach ( [
 				__( 'A trip to the cemetery once a season, if it works out', 'kipora' ),
@@ -57,20 +57,16 @@ $picture = static function ( string $name, string $fallback, string $class, stri
 			<?php endforeach; ?>
 		</ol>
 	</div>
-	<p class="quote problem__quote"><?php echo kipora_theme_emphasis( __( '*Memory does not depend on distance.* The plot can be cared for even when you are on the other side of the world.', 'kipora' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></p>
+	<p class="quote problem__quote" data-reveal="fade-up"><?php echo kipora_theme_emphasis( __( '*Memory does not depend on distance.* The plot can be cared for even when you are on the other side of the world.', 'kipora' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></p>
 </section>
 
 <section class="steps" aria-labelledby="steps-title">
 	<svg class="steps__blob" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><path d="M200 0v160c-18 22-52 28-70 10-20 20-58 14-66-12-30 4-52-22-40-50C-2 96 2 58 30 50 26 22 52 0 80 0Z" fill="currentColor"/></svg>
 	<div class="steps__top">
 		<?php $heading( 'h2', 'steps-title', __( 'How it *works*', 'kipora' ), 'section-head--left' ); ?>
-		<div class="steps__intro">
-			<p class="steps__intro-lead"><?php esc_html_e( 'Everything happens online: the price, the payment and the photos.', 'kipora' ); ?></p>
-			<p class="steps__intro-text"><?php esc_html_e( 'No need to call or wait for an offer. The price is visible before you pay.', 'kipora' ); ?></p>
-		</div>
 	</div>
-	<p class="rule-label"><span class="rule-label__text"><?php esc_html_e( 'Four steps', 'kipora' ); ?></span></p>
-	<ol class="steps__list" role="list">
+	<p class="rule-label" data-reveal="fade-in"><span class="rule-label__text"><?php esc_html_e( 'Four steps', 'kipora' ); ?></span></p>
+	<ol class="steps__list" role="list" data-reveal="stagger">
 		<?php
 		$steps = [
 			[ 'step-1', 'card-pet', __( 'Calculate the price', 'kipora' ), __( 'Choose the service, plot size and cemetery. The price appears right away.', 'kipora' ), __( 'Person choosing a service on a phone', 'kipora' ) ],
@@ -106,7 +102,7 @@ $picture = static function ( string $name, string $fallback, string $class, stri
 		[ __( 'Over the season', 'kipora' ), __( 'Every visit from scratch', 'kipora' ), __( 'Seasonal care in one payment', 'kipora' ) ],
 	];
 	?>
-	<div class="compare__grid">
+	<div class="compare__grid" data-reveal="stagger">
 		<div class="compare__col compare__col--labels" aria-hidden="true">
 			<p class="compare__head">&nbsp;</p>
 			<?php foreach ( $rows as $row ) : ?>
@@ -127,7 +123,7 @@ $picture = static function ( string $name, string $fallback, string $class, stri
 			</div>
 		<?php endforeach; ?>
 	</div>
-	<div class="compare__cta">
+	<div class="compare__cta" data-reveal="fade-up">
 		<p class="quote"><?php echo kipora_theme_emphasis( __( 'You pay only for what you choose. *The price is fixed before payment.*', 'kipora' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></p>
 		<a class="kp-button kp-button--primary" href="<?php echo esc_url( $calculator ); ?>"><?php esc_html_e( 'Calculate the price', 'kipora' ); ?></a>
 	</div>
@@ -136,8 +132,8 @@ $picture = static function ( string $name, string $fallback, string $class, stri
 <section class="memory" aria-labelledby="memory-title">
 	<div class="memory__content">
 		<?php $heading( 'h2', 'memory-title', __( 'A *memorial card* for each loved one', 'kipora' ) ); ?>
-		<p class="memory__lead"><?php esc_html_e( 'Every order is linked to a memorial card. It keeps everything you want to preserve:', 'kipora' ); ?></p>
-		<ol class="numbered numbered--large" role="list">
+		<p class="memory__lead" data-reveal="fade-up"><?php esc_html_e( 'Every order is linked to a memorial card. It keeps everything you want to preserve:', 'kipora' ); ?></p>
+		<ol class="numbered numbered--large" role="list" data-reveal="stagger">
 			<?php
 			foreach ( [
 				__( 'Name and years of life', 'kipora' ),
@@ -151,9 +147,9 @@ $picture = static function ( string $name, string $fallback, string $class, stri
 			<?php endforeach; ?>
 		</ol>
 	</div>
-	<div class="memory__media">
+	<div class="memory__media" data-reveal="fade-up">
 		<?php $picture( 'section-memory', 'card-pet', 'memory__photo', __( 'Old family photographs in a box', 'kipora' ), 500, 550 ); ?>
-		<div class="memory__card">
+		<div class="memory__card" data-reveal="pop" style="--reveal-delay:.35s">
 			<?php $picture( 'section-memory-card', 'card-grave', 'memory__card-photo', '', 320, 320 ); ?>
 			<p class="memory__card-text"><?php esc_html_e( 'Only you can see the card. You log in with Smart-ID or Mobiil-ID.', 'kipora' ); ?></p>
 		</div>
@@ -162,7 +158,7 @@ $picture = static function ( string $name, string $fallback, string $class, stri
 
 <section class="faq" aria-labelledby="faq-title">
 	<?php $heading( 'h2', 'faq-title', __( 'Frequently asked *questions*', 'kipora' ), 'section-head--center' ); ?>
-	<div class="faq__list">
+	<div class="faq__list" data-reveal="stagger">
 		<?php
 		$faq = [
 			[ __( 'How do I know the work is done?', 'kipora' ), __( 'After every visit we upload photos before and after to your account and send you an email.', 'kipora' ) ],
@@ -180,7 +176,7 @@ $picture = static function ( string $name, string $fallback, string $class, stri
 			</details>
 		<?php endforeach; ?>
 	</div>
-	<p class="faq__more">
+	<p class="faq__more" data-reveal="fade-up">
 		<?php esc_html_e( 'Did not find an answer?', 'kipora' ); ?>
 		<a class="kp-link" href="<?php echo esc_url( $contact ); ?>"><?php esc_html_e( 'Write to us', 'kipora' ); ?></a>
 	</p>

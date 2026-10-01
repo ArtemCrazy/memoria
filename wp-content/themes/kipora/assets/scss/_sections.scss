@@ -193,8 +193,6 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 		margin-bottom: var(--kp-space-6);
 
 		@media (min-width: $bp-wide) {
-			grid-template-columns: 1fr minmax(0, 26rem);
-			align-items: end;
 			padding-right: clamp(120px, 14vw, 220px);
 		}
 
@@ -203,17 +201,6 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 		}
 	}
 
-	&__intro-lead {
-		margin: 0 0 var(--kp-space-2);
-		font-size: var(--kp-text-l);
-		font-weight: 500;
-		line-height: 1.25;
-	}
-
-	&__intro-text {
-		margin: 0;
-		color: var(--kp-ink-soft);
-	}
 
 	// Phones: a swipeable row. Wide screens: four columns.
 	&__list {

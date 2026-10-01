@@ -6,6 +6,8 @@
 
 html {
 	-webkit-text-size-adjust: 100%;
+	// Anchors land below the sticky header, not under it.
+	scroll-padding-top: calc(var(--kp-header-h) + var(--kp-space-4));
 }
 
 // Column layout keeps the footer at the bottom of the window on short pages
