@@ -286,7 +286,7 @@ T = {
     "My account": ("Minu konto", "Личный кабинет"),
     "Page not found": ("Lehte ei leitud", "Страница не найдена"),
     "Go to the home page": ("Mine avalehele", "На главную"),
-    "Tallinn • Harju County • Photos before and after": ("Tallinn • Harjumaa • Fotod enne ja pärast", "Таллин • Харьюмаа • Фото до и после"),
+    "Tallinn • Harju County": ("Tallinn • Harjumaa", "Таллин • Харьюмаа"),
     "Grave lantern with a burning candle": ("Kalmulatern põleva küünlaga", "Кладбищенский фонарь с горящей свечой"),
     "Once or for the whole season": ("Ühekordselt või terve hooaja", "Разово или на весь сезон"),
     "Pets": ("Lemmikloomad", "Питомцы"),

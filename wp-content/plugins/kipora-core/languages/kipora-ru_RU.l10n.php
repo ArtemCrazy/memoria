@@ -240,7 +240,7 @@ The work for order %2$s is done. The photo report is in your account:
 		'Status' => 'Статус',
 		'Step %d' => 'Шаг %d',
 		'Tallinn' => 'Таллин',
-		'Tallinn • Harju County • Photos before and after' => 'Таллин • Харьюмаа • Фото до и после',
+		'Tallinn • Harju County' => 'Таллин • Харьюмаа',
 		'Test environment: SK DEMO accounts' => 'Тестовая среда: аккаунты SK DEMO',
 		'Thank you, the message is sent. We usually answer within one working day.' => 'Спасибо, сообщение отправлено. Обычно отвечаем в течение рабочего дня.',
 		'Thank you, the order is paid' => 'Спасибо, заказ оплачен',

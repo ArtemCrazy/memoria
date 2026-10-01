@@ -21,7 +21,7 @@ while ( have_posts() ) :
 	?>
 	<section class="hero" aria-labelledby="hero-title">
 		<div class="hero__head">
-			<p class="hero__features" data-reveal="fade-up"><?php esc_html_e( 'Tallinn • Harju County • Photos before and after', 'kipora' ); ?></p>
+			<p class="hero__features" data-reveal="fade-up"><?php esc_html_e( 'Tallinn • Harju County', 'kipora' ); ?></p>
 			<svg data-reveal="fade-in" style="--reveal-delay:.1s" class="hero__divider" viewBox="0 0 69 6" aria-hidden="true" focusable="false"><path d="M1 3c5.7-3 11.3 3 17 0s11.3-3 17 0 11.3 3 17 0 11.3-3 16 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
 			<h1 class="hero__title" id="hero-title" data-reveal="heading" style="--reveal-delay:.15s"><?php echo kipora_theme_emphasis( get_the_title() ); // phpcs:ignore WordPress.Security.EscapeOutput — escaped inside ?></h1>
 			<?php if ( has_excerpt() ) : ?>

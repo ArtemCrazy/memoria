@@ -240,7 +240,7 @@ Tellimuse %2$s töö on tehtud. Fotoaruanne on teie kontol:
 		'Status' => 'Staatus',
 		'Step %d' => '%d. samm',
 		'Tallinn' => 'Tallinn',
-		'Tallinn • Harju County • Photos before and after' => 'Tallinn • Harjumaa • Fotod enne ja pärast',
+		'Tallinn • Harju County' => 'Tallinn • Harjumaa',
 		'Test environment: SK DEMO accounts' => 'Testkeskkond: SK DEMO kontod',
 		'Thank you, the message is sent. We usually answer within one working day.' => 'Aitäh, sõnum on saadetud. Vastame tavaliselt ühe tööpäeva jooksul.',
 		'Thank you, the order is paid' => 'Aitäh, tellimus on makstud',
