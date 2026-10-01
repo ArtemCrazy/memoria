@@ -51,8 +51,17 @@ def main():
 
         call("Emulation.setDeviceMetricsOverride", width=width, height=height, deviceScaleFactor=1, mobile=mobile)
         call("Page.enable")
-        call("Page.navigate", url=url)
-        time.sleep(7)  # Beget's cookie check reloads the page once; fonts and the line animation settle.
+        # The test host sometimes resets the connection: retry until a real page loads.
+        for _ in range(4):
+            call("Page.navigate", url=url)
+            time.sleep(7)  # Beget's cookie check reloads the page once; fonts and the line animation settle.
+            res = call("Runtime.evaluate", expression="location.href", returnByValue=True)
+            if not str(res["result"].get("value", "")).startswith("chrome-error"):
+                break
+        # Optional page script before capture, e.g. to remove a cookie banner of a reference site.
+        if os.environ.get("KP_SHOT_JS"):
+            call("Runtime.evaluate", expression=os.environ["KP_SHOT_JS"], awaitPromise=True)
+            time.sleep(1)
         # Layout metrics report the viewport in mobile emulation; ask the page itself.
         res = call("Runtime.evaluate", expression="document.documentElement.scrollHeight", returnByValue=True)
         full = int(res["result"]["value"])

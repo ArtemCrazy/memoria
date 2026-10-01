@@ -1,0 +1,101 @@
+@use 'breakpoints' as *;
+
+// Contact page after the reference: a large inviting headline, a short lead,
+// contacts in a row as small label + large value, then the form in two columns.
+
+.contact-hero {
+	padding: var(--kp-space-6) 0 var(--kp-space-7);
+
+	@media (min-width: $bp-wide) {
+		padding-top: var(--kp-space-7);
+	}
+
+	.section-head {
+		margin-bottom: var(--kp-space-5);
+	}
+
+	&__title {
+		max-width: 11em;
+		margin: 0;
+		font: 400 clamp(3rem, 2rem + 4vw, 6rem) / 0.92 var(--kp-font-display);
+		letter-spacing: -0.035em;
+		-webkit-text-stroke: 0.02em currentColor;
+		text-wrap: balance;
+
+		em {
+			font-style: italic;
+		}
+	}
+
+	&__lead {
+		max-width: 34em;
+		margin: 0;
+		color: var(--kp-ink-soft);
+		font-size: var(--kp-text-l);
+		line-height: 1.45;
+	}
+
+	&__list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--kp-space-5) var(--kp-space-7);
+		margin: var(--kp-space-6) 0 0;
+	}
+
+	&__label {
+		margin-bottom: var(--kp-space-1);
+		color: var(--kp-ink-soft);
+		font-size: var(--kp-text-s);
+	}
+
+	&__value {
+		margin: 0;
+		font: 500 clamp(1.25rem, 1rem + 1vw, 1.875rem) / 1.2 var(--kp-font-ui);
+		letter-spacing: -0.02em;
+
+		a {
+			color: var(--kp-ink);
+			text-decoration: none;
+			transition: color var(--kp-fast);
+
+			&:hover {
+				color: var(--kp-accent);
+			}
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--kp-space-3);
+		margin-top: var(--kp-space-6);
+	}
+}
+
+.contact-form {
+	display: grid;
+	gap: var(--kp-space-5);
+	padding: var(--kp-space-7) 0;
+	border-top: 1px solid var(--kp-lichen-deep);
+
+	@media (min-width: $bp-wide) {
+		grid-template-columns: 5fr 7fr;
+		gap: var(--kp-space-7);
+	}
+
+	.section-head {
+		margin-bottom: var(--kp-space-4);
+	}
+
+	&__hint {
+		max-width: 28em;
+		margin: 0;
+		color: var(--kp-ink-soft);
+		line-height: 1.5;
+	}
+
+	// The form takes the whole right column here, not its narrow default.
+	&__body .kp-form--narrow {
+		max-width: none;
+	}
+}

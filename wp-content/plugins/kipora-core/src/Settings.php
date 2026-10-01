@@ -14,6 +14,9 @@ final class Settings {
 	public const DEFAULTS = [
 		'service_name'        => 'KIPORA',
 		'notify_email'        => '',
+		'contact_email'       => '',
+		'contact_phone'       => '',
+		'contact_address'     => '',
 		'montonio_env'        => 'sandbox',
 		'montonio_access_key' => '',
 		'montonio_secret_key' => '',
@@ -37,6 +40,29 @@ final class Settings {
 			$value = (string) get_option( 'admin_email' );
 		}
 		return $value;
+	}
+
+	/**
+	 * Public contact details for the site (contact page, footer). Only filled
+	 * ones are returned: nothing is shown until the client enters real data.
+	 *
+	 * @return array<string,array{label:string,value:string,href:string}>
+	 */
+	public static function contacts(): array {
+		$out   = [];
+		$email = sanitize_email( self::get( 'contact_email' ) );
+		$phone = self::get( 'contact_phone' );
+		$addr  = self::get( 'contact_address' );
+		if ( is_email( $email ) ) {
+			$out['email'] = [ 'label' => __( 'Email', 'kipora' ), 'value' => $email, 'href' => 'mailto:' . $email ];
+		}
+		if ( '' !== $phone ) {
+			$out['phone'] = [ 'label' => __( 'Phone', 'kipora' ), 'value' => $phone, 'href' => 'tel:' . preg_replace( '/[^\d+]/', '', $phone ) ];
+		}
+		if ( '' !== $addr ) {
+			$out['address'] = [ 'label' => __( 'Address', 'kipora' ), 'value' => $addr, 'href' => '' ];
+		}
+		return $out;
 	}
 
 	public static function from_constant( string $key ): bool {

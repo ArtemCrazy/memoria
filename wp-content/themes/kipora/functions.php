@@ -103,6 +103,11 @@ function kipora_theme_image( string $name, string $fallback = '' ): array {
 	return [ $url( "{$name}.jpg" ), $url( "{$name}.webp" ) ];
 }
 
+/** Short wavy line above section headings. */
+function kipora_theme_divider(): string {
+	return '<svg class="section-head__divider" viewBox="0 0 69 6" aria-hidden="true" focusable="false"><path d="M1 3c5.7-3 11.3 3 17 0s11.3-3 17 0 11.3 3 17 0 11.3-3 16 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+}
+
 /** URL of any theme asset, versioned by file time. */
 function kipora_theme_asset( string $rel ): string {
 	$path = get_theme_file_path( "assets/{$rel}" );

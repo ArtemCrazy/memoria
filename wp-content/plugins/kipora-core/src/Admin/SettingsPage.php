@@ -65,6 +65,14 @@ final class SettingsPage {
 					<?php $field( 'notify_email', __( 'Email for new orders', 'kipora' ) ); ?>
 				</table>
 
+				<h2><?php esc_html_e( 'Contacts on the site', 'kipora' ); ?></h2>
+				<p class="description"><?php esc_html_e( 'Shown on the contact page and in the footer. An empty field is not shown.', 'kipora' ); ?></p>
+				<table class="form-table">
+					<?php $field( 'contact_email', __( 'Email', 'kipora' ) ); ?>
+					<?php $field( 'contact_phone', __( 'Phone', 'kipora' ) ); ?>
+					<?php $field( 'contact_address', __( 'Address', 'kipora' ) ); ?>
+				</table>
+
 				<h2>Montonio</h2>
 				<table class="form-table">
 					<tr><th scope="row"><?php esc_html_e( 'Environment', 'kipora' ); ?></th><td><?php $env( 'montonio_env', [ 'sandbox' => 'Sandbox', 'live' => 'Live' ] ); ?></td></tr>

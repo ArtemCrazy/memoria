@@ -32,4 +32,24 @@
 			color: var(--kp-ink-soft);
 		}
 	}
+
+	&__contacts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--kp-space-1) var(--kp-space-5);
+		margin: var(--kp-space-3) 0 0;
+		padding: 0;
+		list-style: none;
+		color: var(--kp-ink);
+		font-size: var(--kp-text-m);
+
+		a {
+			color: var(--kp-ink);
+			text-decoration: none;
+
+			&:hover {
+				color: var(--kp-accent);
+			}
+		}
+	}
 }

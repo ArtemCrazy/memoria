@@ -357,6 +357,13 @@ T = {
     'Only you. Photos and documents in the archive are not public and are not shown to search engines.': ('Ainult teie. Arhiivi fotod ja dokumendid ei ole avalikud ega jõua otsingumootoritesse.', 'Только вы. Фото и документы в архиве не публичны и не попадают в поисковики.'),
     'Did not find an answer?': ('Ei leidnud vastust?', 'Не нашли ответ?'),
     'Write to us': ('Kirjutage meile', 'Напишите нам'),
+    'Address': ('Aadress', 'Адрес'),
+    'Contacts on the site': ('Kontaktid kodulehel', 'Контакты на сайте'),
+    'Shown on the contact page and in the footer. An empty field is not shown.': ('Kuvatakse kontaktilehel ja jaluses. Tühja välja ei kuvata.', 'Показываются на странице контактов и в подвале. Пустое поле не выводится.'),
+    'Tell us how we can *help*': ('Rääkige, kuidas saame *aidata*', 'Расскажите, чем мы можем *помочь*'),
+    'Send a message': ('Saada sõnum', 'Написать сообщение'),
+    'Write *to us*': ('Kirjutage *meile*', 'Напишите *нам*'),
+    'We will answer to the email you enter in the form.': ('Vastame e-postile, mille vormis märgite.', 'Ответим на почту, которую вы укажете в форме.'),
 }
 
 PATTERN = re.compile(r"(?:__|_e|esc_html__|esc_html_e|esc_attr__|esc_attr_e)\(\s*(['\"])((?:\\.|(?!\1).)*)\1\s*,\s*'kipora'")

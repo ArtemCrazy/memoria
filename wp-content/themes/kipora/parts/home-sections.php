@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 
 $calculator = kipora_theme_page( 'calculator' );
 $contact    = kipora_theme_page( 'contact' );
-$divider    = '<svg class="section-head__divider" viewBox="0 0 69 6" aria-hidden="true" focusable="false"><path d="M1 3c5.7-3 11.3 3 17 0s11.3-3 17 0 11.3 3 17 0 11.3-3 16 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+$divider    = kipora_theme_divider();
 $heading    = static function ( string $tag, string $id, string $text, string $class = '' ) use ( $divider ): void {
 	printf(
 		'<header class="section-head %1$s"><span data-reveal="fade-in">%2$s</span><%3$s class="section-head__title" id="%4$s" data-reveal="heading">%5$s</%3$s></header>',
