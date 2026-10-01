@@ -61,9 +61,13 @@ while ( have_posts() ) :
 		</div>
 	</section>
 
-	<div class="entry">
-		<?php the_content(); ?>
-	</div>
+	<?php get_template_part( 'parts/home-sections' ); ?>
+
+	<?php if ( trim( get_the_content() ) ) : ?>
+		<div class="entry">
+			<?php the_content(); ?>
+		</div>
+	<?php endif; ?>
 	<?php
 endwhile;
 get_footer();

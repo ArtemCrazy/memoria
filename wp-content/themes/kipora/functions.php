@@ -76,6 +76,22 @@ add_filter(
 );
 add_filter( 'nav_menu_item_title', static fn( string $title ): string => str_replace( '*', '', $title ) );
 
+/**
+ * [jpg, webp] URLs of a theme image, versioned by file time so a replaced
+ * photo is not served from cache. Falls back to another image while the
+ * requested one has not been made yet.
+ */
+function kipora_theme_image( string $name, string $fallback = '' ): array {
+	if ( ! is_file( get_theme_file_path( "assets/img/{$name}.jpg" ) ) && $fallback ) {
+		$name = $fallback;
+	}
+	$url = static function ( string $file ): string {
+		$path = get_theme_file_path( "assets/img/{$file}" );
+		return add_query_arg( 'v', is_file( $path ) ? (string) filemtime( $path ) : '0', get_theme_file_uri( "assets/img/{$file}" ) );
+	};
+	return [ $url( "{$name}.jpg" ), $url( "{$name}.webp" ) ];
+}
+
 /** Calculator link with a direction already chosen (same format the calculator writes). */
 function kipora_theme_selection( string $direction ): string {
 	return rtrim( strtr( base64_encode( (string) wp_json_encode( [ 'direction' => $direction ] ) ), '+/', '-_' ), '=' );

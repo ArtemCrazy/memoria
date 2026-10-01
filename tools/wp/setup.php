@@ -185,7 +185,7 @@ foreach ( $pages as $key => $langs ) {
 update_option( 'kipora_setup_pages', $map, false );
 
 $functional = [];
-foreach ( [ 'calculator', 'checkout', 'account', 'terms', 'privacy' ] as $key ) {
+foreach ( [ 'calculator', 'checkout', 'account', 'terms', 'privacy', 'contact', 'about' ] as $key ) {
 	$functional[ $key ] = $map[ $key ]['et'];
 }
 update_option( 'kipora_pages', $functional );
