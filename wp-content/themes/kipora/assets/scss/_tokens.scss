@@ -1,27 +1,35 @@
 // Design tokens. Every colour, size and radius on the site comes from here.
-// Palette and type follow the reference the client approved for the home page
-// (sage paper, deep green ink, olive action colour, amber second accent).
+// Colours are mixed from the three brand values in assets/css/brand.css, so the
+// client edits one plain file and the whole palette follows. The fallbacks in
+// var() keep the site readable if brand.css fails to load.
 
 :root {
+	--kp-navy: var(--kp-brand-navy, #0f172a);
+	--kp-gold: var(--kp-brand-gold, #d4af37);
+	--kp-silver: var(--kp-brand-silver, #c0c7d1);
+
 	// Colour
-	--kp-ink: #223a28;
-	--kp-ink-soft: #4f6154;
-	--kp-moss: #32573b;
-	--kp-moss-deep: #223a28;
-	--kp-moss-wash: #f4ffd8;
-	--kp-accent: #6d910a;
-	--kp-mist: #eaefd1;
-	--kp-mist-light: #f1f4e2;
-	--kp-paper: #fcfdf6;
+	--kp-ink: var(--kp-navy);
+	--kp-ink-soft: color-mix(in srgb, var(--kp-navy) 72%, #fff);
+	--kp-moss: var(--kp-navy);
+	--kp-moss-deep: color-mix(in srgb, var(--kp-navy) 80%, #000);
+	--kp-moss-wash: color-mix(in srgb, var(--kp-navy) 7%, #fff);
+	--kp-accent: var(--kp-gold);
+	// Gold itself is too light for text on paper (about 2:1); this darker gold reads at 4.5:1+.
+	--kp-accent-text: color-mix(in srgb, var(--kp-gold) 60%, #000);
+	--kp-on-accent: var(--kp-navy);
+	--kp-mist: color-mix(in srgb, var(--kp-silver) 30%, #fff);
+	--kp-mist-light: color-mix(in srgb, var(--kp-silver) 16%, #fff);
+	--kp-paper: color-mix(in srgb, var(--kp-silver) 6%, #fff);
 	--kp-sticker: #ffffff;
-	--kp-lichen: #d6ddbb;
-	--kp-lichen-deep: #a6b38c;
-	--kp-candle: #976603;
-	--kp-candle-wash: #fff6d9;
+	--kp-lichen: color-mix(in srgb, var(--kp-silver) 70%, #fff);
+	--kp-lichen-deep: var(--kp-silver);
+	--kp-candle: var(--kp-accent-text);
+	--kp-candle-wash: color-mix(in srgb, var(--kp-gold) 14%, #fff);
 	--kp-error: #9b2c2c;
 	--kp-error-wash: #f6e5e3;
-	--kp-shadow: rgb(34 58 40 / 14%);
-	--kp-focus: 2px solid #1f4f8f;
+	--kp-shadow: color-mix(in srgb, var(--kp-navy) 14%, transparent);
+	--kp-focus: 2px solid var(--kp-navy);
 
 	// Type
 	--kp-font-display: 'KP Display', 'Georgia', serif;

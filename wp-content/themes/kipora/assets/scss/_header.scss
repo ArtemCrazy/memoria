@@ -65,7 +65,7 @@
 		text-decoration: none;
 
 		&:hover {
-			color: var(--kp-accent);
+			color: var(--kp-accent-text);
 		}
 
 		@media (min-width: $bp-wide) {
@@ -147,7 +147,7 @@
 		transition: color var(--kp-fast);
 
 		&:hover {
-			color: var(--kp-accent);
+			color: var(--kp-accent-text);
 		}
 
 		@media (min-width: $bp-wide) {
@@ -157,7 +157,7 @@
 
 	.current-menu-item > a,
 	.current_page_item > a {
-		color: var(--kp-accent);
+		color: var(--kp-accent-text);
 	}
 }
 

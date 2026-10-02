@@ -23,14 +23,15 @@
 		cursor: default;
 	}
 
-	// White on olive passes contrast only as large text, hence 19px bold.
+	// Navy on gold reads at about 8:1; on hover the button turns navy with white text.
 	&--primary {
 		background: var(--kp-accent);
-		color: var(--kp-sticker);
+		color: var(--kp-on-accent);
 		font-size: 1.1875rem;
 		font-weight: 700;
 
 		&:hover:not(:disabled) {
+			color: var(--kp-sticker);
 			background: var(--kp-ink);
 		}
 	}

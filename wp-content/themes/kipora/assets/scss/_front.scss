@@ -195,7 +195,7 @@ $figure-ratio: calc((760 + 16) / (950 + 16));
 	min-width: 0;
 	max-width: 15rem;
 	padding: var(--kp-space-3) var(--kp-space-3) var(--kp-space-4);
-	border: 2px solid var(--kp-accent);
+	border: 2px solid var(--kp-moss);
 	border-radius: 2rem;
 	background: var(--kp-moss-wash);
 	color: var(--kp-moss);
@@ -214,7 +214,7 @@ $figure-ratio: calc((760 + 16) / (950 + 16));
 	}
 
 	&--pet {
-		border-color: var(--kp-candle);
+		border-color: var(--kp-accent);
 		background: var(--kp-candle-wash);
 		color: var(--kp-candle);
 		transform: rotate(3deg);

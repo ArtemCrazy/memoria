@@ -79,7 +79,7 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 .quote {
 	max-width: 32em;
 	margin: 0 auto;
-	color: var(--kp-accent);
+	color: var(--kp-accent-text);
 	font: 400 clamp(1.25rem, 1.05rem + 0.8vw, 1.875rem) / 1.2 var(--kp-font-display);
 	text-align: center;
 	text-wrap: balance;
@@ -95,7 +95,7 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 	align-items: center;
 	gap: var(--kp-space-4);
 	margin: 0 0 var(--kp-space-5);
-	color: var(--kp-accent);
+	color: var(--kp-accent-text);
 
 	&::before,
 	&::after {
@@ -183,7 +183,7 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 		right: calc(50% - 50vw);
 		width: clamp(120px, 16vw, 240px);
 		height: auto;
-		color: var(--kp-ink);
+		color: var(--kp-lichen-deep);
 		pointer-events: none;
 	}
 
@@ -314,7 +314,7 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 
 		&--brand {
 			background: var(--kp-accent);
-			color: var(--kp-sticker);
+			color: var(--kp-on-accent);
 		}
 	}
 
@@ -477,7 +477,7 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 		}
 
 		&:hover {
-			color: var(--kp-accent);
+			color: var(--kp-accent-text);
 		}
 	}
 

@@ -1,0 +1,16 @@
+/*
+ * KIPORA brand colours.
+ *
+ * The whole site takes its palette from these three values: backgrounds,
+ * lines, card fills, buttons and links are mixed from them automatically.
+ * To adjust a shade, change the HEX here and save. No build step needed.
+ *
+ * Фирменные цвета KIPORA. Весь сайт берёт палитру из этих трёх значений.
+ * Чтобы поправить оттенок, измените HEX здесь и сохраните файл.
+ */
+
+:root {
+	--kp-brand-navy: #0f172a;   /* тёмно-синий: текст, ссылки, тёмные акценты */
+	--kp-brand-gold: #d4af37;   /* золото: кнопки, акценты */
+	--kp-brand-silver: #c0c7d1; /* серебро: фон, линии, подложки */
+}
