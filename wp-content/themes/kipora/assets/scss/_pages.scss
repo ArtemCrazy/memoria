@@ -1,0 +1,287 @@
+@use 'breakpoints' as *;
+
+// Inner pages built from blocks: services, cemeteries, pets, prices.
+// They reuse the home page language (wavy line over a display heading,
+// sticker photos, numbered lists) so a visitor feels one site.
+
+.breadcrumbs {
+	margin: 0 0 var(--kp-space-5);
+	font-size: var(--kp-text-s);
+
+	&__list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--kp-space-1) var(--kp-space-2);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		color: var(--kp-ink-soft);
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: var(--kp-space-2);
+
+		// Separator drawn as a small chevron, not a typed character.
+		& + &::before {
+			content: '';
+			width: 6px;
+			height: 6px;
+			border-top: 1.5px solid currentColor;
+			border-right: 1.5px solid currentColor;
+			transform: rotate(45deg);
+			opacity: 0.6;
+		}
+
+		a {
+			color: var(--kp-ink-soft);
+			text-decoration: none;
+
+			&:hover {
+				color: var(--kp-accent-text);
+			}
+		}
+	}
+}
+
+.page-intro {
+	display: grid;
+	gap: var(--kp-space-6);
+	align-items: center;
+	padding: var(--kp-space-4) 0 var(--kp-space-7);
+
+	@media (min-width: $bp-wide) {
+		&--photo {
+			grid-template-columns: 1.15fr 0.85fr;
+			gap: var(--kp-space-7);
+		}
+	}
+
+	&__head {
+		margin-bottom: var(--kp-space-5);
+
+		.section-head__title {
+			max-width: 11em;
+			font-size: clamp(2.75rem, 2rem + 3.4vw, 5.25rem);
+			line-height: 0.95;
+		}
+	}
+
+	&__lead {
+		max-width: 34em;
+		margin: 0;
+		color: var(--kp-ink-soft);
+		font-size: var(--kp-text-l);
+		line-height: 1.45;
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--kp-space-3);
+		margin-top: var(--kp-space-6);
+	}
+
+	&__media {
+		max-width: 26rem;
+		justify-self: center;
+		padding: var(--kp-sticker-border);
+		border-radius: var(--kp-radius-sticker);
+		background: var(--kp-sticker);
+		box-shadow: 0 18px 40px var(--kp-shadow);
+		transform: rotate(2deg);
+	}
+
+	&__photo img {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 14 / 15;
+		object-fit: cover;
+		border-radius: calc(var(--kp-radius-sticker) - var(--kp-sticker-border));
+	}
+}
+
+.price-list {
+	padding: var(--kp-space-7) 0;
+
+	&__scroll {
+		overflow-x: auto;
+		border: 1.5px solid var(--kp-lichen-deep);
+		border-radius: 2rem;
+		background: var(--kp-sticker);
+	}
+
+	&__table {
+		width: 100%;
+		min-width: 34rem;
+		border-collapse: collapse;
+
+		th,
+		td {
+			padding: var(--kp-space-4) var(--kp-space-5);
+			border-bottom: 1px solid var(--kp-lichen);
+			text-align: left;
+		}
+
+		thead th {
+			color: var(--kp-ink-soft);
+			font: 400 var(--kp-text-m) / 1.2 var(--kp-font-ui);
+		}
+
+		tbody th {
+			font: 400 var(--kp-text-l) / 1.2 var(--kp-font-display);
+		}
+
+		td {
+			font-weight: 600;
+			white-space: nowrap;
+		}
+
+		tbody tr:last-child > * {
+			border-bottom: 0;
+		}
+	}
+
+	&__rows {
+		display: grid;
+		max-width: 46rem;
+		margin: 0;
+	}
+
+	&__row {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: var(--kp-space-5);
+		padding: var(--kp-space-4) 0;
+		border-bottom: 1px solid var(--kp-lichen-deep);
+
+		dt {
+			font: 400 var(--kp-text-l) / 1.2 var(--kp-font-display);
+		}
+
+		dd {
+			margin: 0;
+			font-weight: 600;
+			white-space: nowrap;
+		}
+	}
+
+	&__foot {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--kp-space-4) var(--kp-space-6);
+		margin-top: var(--kp-space-5);
+	}
+
+	&__note {
+		max-width: 36em;
+		margin: 0;
+		color: var(--kp-ink-soft);
+		font-size: var(--kp-text-s);
+		line-height: 1.5;
+	}
+}
+
+.cemetery-card {
+	display: grid;
+	gap: var(--kp-space-5);
+	padding: var(--kp-space-5);
+	border: 1.5px solid var(--kp-lichen-deep);
+	border-radius: 2rem;
+	background: var(--kp-sticker);
+
+	@media (min-width: $bp-mid) {
+		padding: var(--kp-space-6);
+	}
+
+	&__facts {
+		display: grid;
+		gap: var(--kp-space-4) var(--kp-space-6);
+		margin: 0;
+
+		@media (min-width: $bp-mid) {
+			grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+		}
+
+		dt {
+			margin-bottom: var(--kp-space-1);
+			color: var(--kp-ink-soft);
+			font-size: var(--kp-text-s);
+		}
+
+		dd {
+			margin: 0;
+			font: 400 var(--kp-text-l) / 1.2 var(--kp-font-display);
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--kp-space-3) var(--kp-space-5);
+
+		// Long button labels ("Order care at this cemetery") wrap on phones instead of overflowing.
+		.kp-button {
+			max-width: 100%;
+			white-space: normal;
+			text-align: center;
+
+			@media (max-width: $bp-mid - 1px) {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.page-cards {
+	padding: var(--kp-space-7) 0;
+
+	&__list {
+		display: grid;
+		gap: var(--kp-space-4);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		@media (min-width: $bp-mid) {
+			grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+		}
+	}
+
+	&__link {
+		display: flex;
+		flex-direction: column;
+		gap: var(--kp-space-2);
+		height: 100%;
+		padding: var(--kp-space-5);
+		border: 1.5px solid var(--kp-lichen-deep);
+		border-radius: 2rem;
+		background: var(--kp-sticker);
+		color: var(--kp-ink);
+		text-decoration: none;
+		transition: border-color var(--kp-fast);
+
+		&:hover {
+			border-color: var(--kp-accent);
+		}
+	}
+
+	&__title {
+		font: 400 var(--kp-text-xl) / 1.1 var(--kp-font-display);
+	}
+
+	&__text {
+		color: var(--kp-ink-soft);
+		line-height: 1.45;
+	}
+}
+
+// Text written between blocks on an inner page keeps the reading width.
+.entry--blocks > :not(.kp-block) {
+	max-width: 68ch;
+}

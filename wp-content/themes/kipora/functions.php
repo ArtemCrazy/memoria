@@ -120,9 +120,21 @@ function kipora_theme_asset( string $rel ): string {
 	return add_query_arg( 'v', is_file( $path ) ? (string) filemtime( $path ) : '0', get_theme_file_uri( "assets/{$rel}" ) );
 }
 
-/** Calculator link with a direction already chosen (same format the calculator writes). */
-function kipora_theme_selection( string $direction ): string {
-	return rtrim( strtr( base64_encode( (string) wp_json_encode( [ 'direction' => $direction ] ) ), '+/', '-_' ), '=' );
+/** Calculator link with a direction (and optionally package, cemetery…) already chosen, in the format the calculator writes. */
+function kipora_theme_selection( string $direction, array $extra = [] ): string {
+	return rtrim( strtr( base64_encode( (string) wp_json_encode( array_merge( [ 'direction' => $direction ], $extra ) ) ), '+/', '-_' ), '=' );
+}
+
+/** Calculator URL in the current language, with a preset selection when given. */
+function kipora_theme_calculator_url( array $preset = [] ): string {
+	$url    = kipora_theme_page( 'calculator' );
+	$preset = array_filter( array_map( 'strval', $preset ) );
+	if ( empty( $preset['direction'] ) ) {
+		return $url;
+	}
+	$direction = $preset['direction'];
+	unset( $preset['direction'] );
+	return add_query_arg( 'sel', kipora_theme_selection( $direction, $preset ), $url );
 }
 
 /** Language links ET / RU / EN (Polylang). */
@@ -151,4 +163,31 @@ function kipora_theme_languages(): void {
 		);
 	}
 	echo '</ul>';
+}
+
+/**
+ * Breadcrumbs on subpages (Home › Cemeteries › Metsakalmistu), with schema.org
+ * markup so search engines show the path. Top-level pages have none.
+ */
+function kipora_theme_breadcrumbs(): void {
+	$ancestors = array_reverse( get_post_ancestors( get_the_ID() ) );
+	if ( ! $ancestors ) {
+		return;
+	}
+	$items   = [ [ __( 'Home', 'kipora' ), function_exists( 'pll_home_url' ) ? pll_home_url() : home_url( '/' ) ] ];
+	foreach ( $ancestors as $id ) {
+		$items[] = [ str_replace( '*', '', get_the_title( $id ) ), get_permalink( $id ) ];
+	}
+	$items[] = [ str_replace( '*', '', get_the_title() ), '' ];
+	echo '<nav class="breadcrumbs" aria-label="' . esc_attr__( 'Breadcrumbs', 'kipora' ) . '"><ol class="breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">';
+	foreach ( $items as $i => [ $name, $url ] ) {
+		echo '<li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">';
+		if ( $url ) {
+			echo '<a itemprop="item" href="' . esc_url( $url ) . '"><span itemprop="name">' . esc_html( $name ) . '</span></a>';
+		} else {
+			echo '<span itemprop="name" aria-current="page">' . esc_html( $name ) . '</span>';
+		}
+		echo '<meta itemprop="position" content="' . (int) ( $i + 1 ) . '"></li>';
+	}
+	echo '</ol></nav>';
 }

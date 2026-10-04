@@ -25,7 +25,7 @@
 		padding-top: var(--kp-space-3);
 		padding-bottom: var(--kp-space-3);
 
-		@media (min-width: $bp-wide) {
+		@media (min-width: $bp-nav) {
 			flex-wrap: nowrap;
 			gap: var(--kp-space-5);
 		}
@@ -52,7 +52,7 @@
 			display: flex;
 		}
 
-		@media (min-width: $bp-wide) {
+		@media (min-width: $bp-nav) {
 			display: contents;
 		}
 	}
@@ -68,14 +68,14 @@
 			color: var(--kp-accent-text);
 		}
 
-		@media (min-width: $bp-wide) {
+		@media (min-width: $bp-nav) {
 			order: 2;
 			font-size: var(--kp-text-m);
 		}
 	}
 
 	&__cta {
-		@media (min-width: $bp-wide) {
+		@media (min-width: $bp-nav) {
 			order: 4;
 		}
 	}
@@ -89,7 +89,7 @@
 		background: none;
 		cursor: pointer;
 
-		@media (min-width: $bp-wide) {
+		@media (min-width: $bp-nav) {
 			display: none;
 		}
 	}
@@ -121,7 +121,7 @@
 }
 
 .site-nav {
-	@media (min-width: $bp-wide) {
+	@media (min-width: $bp-nav) {
 		order: 1;
 		margin: 0 auto;
 	}
@@ -134,9 +134,9 @@
 		padding: 0;
 		list-style: none;
 
-		@media (min-width: $bp-wide) {
+		@media (min-width: $bp-nav) {
 			flex-direction: row;
-			gap: var(--kp-space-6);
+			gap: var(--kp-space-5);
 		}
 	}
 
@@ -150,13 +150,17 @@
 			color: var(--kp-accent-text);
 		}
 
-		@media (min-width: $bp-wide) {
+		@media (min-width: $bp-nav) {
 			font: 400 1.125rem / 1.2 var(--kp-font-ui);
+			white-space: nowrap;
 		}
 	}
 
+	// A cemetery or pet subpage lights up its section in the menu.
 	.current-menu-item > a,
-	.current_page_item > a {
+	.current_page_item > a,
+	.current-menu-ancestor > a,
+	.current-page-ancestor > a {
 		color: var(--kp-accent-text);
 	}
 }
@@ -168,7 +172,7 @@
 	padding: 0;
 	list-style: none;
 
-	@media (min-width: $bp-wide) {
+	@media (min-width: $bp-nav) {
 		order: 3;
 	}
 

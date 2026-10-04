@@ -1,2 +1,4 @@
 $bp-wide: 880px;
 $bp-mid: 600px;
+// The header menu, account, languages and the button need more room than the page layout (Russian labels are the longest).
+$bp-nav: 1280px;

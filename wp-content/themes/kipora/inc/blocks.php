@@ -41,17 +41,28 @@ add_action(
 		wp_enqueue_script(
 			'kipora-blocks',
 			get_theme_file_uri( 'assets/js/blocks.js' ),
-			[ 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-data' ],
+			[ 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-data', 'wp-server-side-render' ],
 			(string) filemtime( $path ),
 			true
 		);
 		wp_set_script_translations( 'kipora-blocks', 'kipora', get_theme_file_path( 'languages' ) );
+		// Choices for the blocks that link to the calculator: its cemeteries and packages.
+		$tariffs = class_exists( 'Kipora\TariffStore' ) ? Kipora\TariffStore::get() : [];
+		$pick    = static fn( array $rows, string $key ): array => array_map(
+			static fn( array $row ): array => [
+				'value' => (string) $row['id'],
+				'label' => is_array( $row[ $key ] ?? null ) ? (string) ( $row[ $key ]['et'] ?? '' ) : (string) ( $row[ $key ] ?? '' ),
+			],
+			$rows
+		);
 		wp_add_inline_script(
 			'kipora-blocks',
 			'window.kiporaBlocks = ' . wp_json_encode(
 				[
-					'img'   => get_theme_file_uri( 'assets/img/' ),
-					'video' => kipora_theme_asset( 'video/hero-lantern.mp4' ),
+					'img'        => get_theme_file_uri( 'assets/img/' ),
+					'video'      => kipora_theme_asset( 'video/hero-lantern.mp4' ),
+					'cemeteries' => $pick( (array) ( $tariffs['grave']['cemeteries'] ?? [] ), 'name' ),
+					'packages'   => $pick( (array) ( $tariffs['grave']['packages'] ?? [] ), 'label' ),
 				]
 			) . ';',
 			'before'
@@ -106,6 +117,34 @@ add_filter(
 			]
 		);
 	}
+);
+
+/**
+ * Block previews in the editor come from the REST API, which runs in the
+ * admin's language. Render them in the language of the page being edited,
+ * so a Russian page shows Russian labels and prices.
+ */
+add_filter(
+	'rest_request_before_callbacks',
+	static function ( $response, $handler, WP_REST_Request $request ) {
+		$page = (int) $request->get_param( 'post_id' );
+		if ( ! $page || ! str_starts_with( $request->get_route(), '/wp/v2/block-renderer/' ) || ! function_exists( 'pll_get_post_language' ) ) {
+			return $response;
+		}
+		$locale = (string) pll_get_post_language( $page, 'locale' );
+		if ( $locale ) {
+			add_filter( 'pre_determine_locale', static fn(): string => $locale );
+			switch_to_locale( $locale );
+			// The KIPORA strings are already loaded in the admin's language: reload them.
+			if ( defined( 'KIPORA_FILE' ) ) {
+				unload_textdomain( 'kipora', true );
+				load_plugin_textdomain( 'kipora', false, dirname( plugin_basename( KIPORA_FILE ) ) . '/languages' );
+			}
+		}
+		return $response;
+	},
+	10,
+	3
 );
 
 /**

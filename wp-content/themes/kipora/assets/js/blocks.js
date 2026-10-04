@@ -379,4 +379,174 @@
 		},
 		save: NOTHING
 	});
+
+	// Choices for blocks that open the calculator with something already selected.
+	function choices(list, emptyLabel) {
+		return [{ label: emptyLabel, value: '' }].concat(list || []);
+	}
+
+	function presetControls(props) {
+		var preset = props.attributes.preset || {};
+		var change = function (key) {
+			return function (value) {
+				var next = Object.assign({}, preset);
+				next[key] = value;
+				if (!next.direction) {
+					next = {};
+				}
+				props.setAttributes({ preset: next });
+			};
+		};
+		return [
+			el(c.SelectControl, {
+				key: 'direction',
+				label: __('Calculator opens with', 'kipora'),
+				value: preset.direction || '',
+				options: [
+					{ label: __('Nothing chosen', 'kipora'), value: '' },
+					{ label: __('Grave care', 'kipora'), value: 'grave' },
+					{ label: __('Pets', 'kipora'), value: 'pet' }
+				],
+				onChange: change('direction'),
+				__nextHasNoMarginBottom: true
+			}),
+			preset.direction === 'grave' ? el(c.SelectControl, {
+				key: 'package',
+				label: __('Service', 'kipora'),
+				value: preset.package || '',
+				options: choices(cfg.packages, __('Not chosen', 'kipora')),
+				onChange: change('package'),
+				__nextHasNoMarginBottom: true
+			}) : null,
+			preset.direction === 'grave' ? el(c.SelectControl, {
+				key: 'cemetery',
+				label: __('Cemetery', 'kipora'),
+				value: preset.cemetery || '',
+				options: choices(cfg.cemeteries, __('Not chosen', 'kipora')),
+				onChange: change('cemetery'),
+				__nextHasNoMarginBottom: true
+			}) : null
+		];
+	}
+
+	// Top of an inner page: the page headline is written here.
+	registerBlockType('kipora/page-intro', {
+		edit: function (props) {
+			var a = props.attributes;
+			var hasPhoto = !!((a.image || {}).url || a.fallback);
+			return el(Fragment, null,
+				sidebar(
+					panel(__('Button', 'kipora'),
+						linkControl(props, 'buttonUrl', __('Button link', 'kipora'), CALC_HELP),
+						presetControls(props),
+						linkControl(props, 'secondUrl', __('Second link', 'kipora'), __('Shown only with a link and a text.', 'kipora'))),
+					panel(__('Photo', 'kipora'), photoControls(props, 'image', __('Photo', 'kipora')))),
+				el('section', be.useBlockProps({ className: 'page-intro kp-block' + (hasPhoto ? ' page-intro--photo' : '') }),
+					el('div', { className: 'page-intro__text' },
+						el('header', { className: 'section-head page-intro__head' },
+							wave('section-head__divider'),
+							text(props, 'title', 'h1', 'section-head__title', __('Page headline. Select words and press Ctrl+I for italic', 'kipora'), true)),
+						text(props, 'lead', 'p', 'page-intro__lead', __('One or two sentences under the headline', 'kipora')),
+						el('div', { className: 'page-intro__actions' },
+							text(props, 'buttonText', 'span', 'kp-button kp-button--primary', __('Button text', 'kipora')),
+							text(props, 'secondText', 'span', 'kp-button kp-button--quiet', __('Second link text', 'kipora')))),
+					hasPhoto ? el('div', { className: 'page-intro__media' }, photo(props, 'image', a.fallback, 'page-intro__photo')) : null)
+			);
+		},
+		save: NOTHING
+	});
+
+	// Blocks drawn by the site itself (prices from the calculator, cemetery facts, subpage cards):
+	// settings in the sidebar, the preview comes from the server.
+	function preview(name, props) {
+		return el('div', be.useBlockProps(),
+			el(wp.serverSideRender, {
+				block: name,
+				attributes: props.attributes,
+				httpMethod: 'POST',
+				// The page being edited, so "subpages of this page" and the page language work in the preview.
+				urlQueryArgs: { post_id: wp.data.select('core/editor').getCurrentPostId() }
+			}));
+	}
+
+	function field(props, name, label, help) {
+		return el(c.TextControl, {
+			key: name,
+			label: label,
+			help: help,
+			value: props.attributes[name],
+			onChange: set(props, name),
+			__nextHasNoMarginBottom: true
+		});
+	}
+
+	registerBlockType('kipora/prices', {
+		edit: function (props) {
+			return el(Fragment, null,
+				sidebar(panel(__('Price list', 'kipora'),
+					el(c.SelectControl, {
+						label: __('Which prices', 'kipora'),
+						help: __('Prices are edited in KIPORA → Prices, the same ones the calculator uses.', 'kipora'),
+						value: props.attributes.group,
+						options: [
+							{ label: __('Grave care by plot size', 'kipora'), value: 'grave' },
+							{ label: __('Flowers and candle', 'kipora'), value: 'flowers' },
+							{ label: __('Additional work', 'kipora'), value: 'extras' },
+							{ label: __('Pet services', 'kipora'), value: 'pet' },
+							{ label: __('Urns', 'kipora'), value: 'urns' },
+							{ label: __('Memorial page', 'kipora'), value: 'memory' }
+						],
+						onChange: set(props, 'group'),
+						__nextHasNoMarginBottom: true
+					}),
+					field(props, 'title', __('Heading', 'kipora')),
+					field(props, 'note', __('Note under the prices', 'kipora')),
+					field(props, 'buttonText', __('Button text', 'kipora'), __('The button opens the calculator.', 'kipora')))),
+				preview('kipora/prices', props));
+		},
+		save: NOTHING
+	});
+
+	registerBlockType('kipora/cemetery', {
+		edit: function (props) {
+			return el(Fragment, null,
+				sidebar(panel(__('Cemetery', 'kipora'),
+					el(c.SelectControl, {
+						label: __('Cemetery in the calculator', 'kipora'),
+						help: __('The order button opens the calculator with this cemetery chosen.', 'kipora'),
+						value: props.attributes.cemetery,
+						options: choices(cfg.cemeteries, __('Not chosen', 'kipora')),
+						onChange: set(props, 'cemetery'),
+						__nextHasNoMarginBottom: true
+					}),
+					field(props, 'address', __('Address', 'kipora')),
+					field(props, 'district', __('District', 'kipora')),
+					field(props, 'area', __('Area', 'kipora')),
+					field(props, 'manager', __('Managed by', 'kipora')),
+					field(props, 'portal', __('Number in the cemetery portal', 'kipora'), __('From the address kalmistud.ee/cemetery/25: here 25.', 'kipora')),
+					field(props, 'lat', __('Latitude', 'kipora')),
+					field(props, 'lon', __('Longitude', 'kipora')),
+					field(props, 'buttonText', __('Button text', 'kipora')))),
+				preview('kipora/cemetery', props));
+		},
+		save: NOTHING
+	});
+
+	registerBlockType('kipora/page-list', {
+		edit: function (props) {
+			return el(Fragment, null,
+				sidebar(panel(__('Subpage cards', 'kipora'),
+					field(props, 'title', __('Heading', 'kipora')),
+					el(c.TextControl, {
+						label: __('Parent page number', 'kipora'),
+						help: __('Leave 0 to show the subpages of this page. The card text is the page excerpt.', 'kipora'),
+						type: 'number',
+						value: props.attributes.parent,
+						onChange: function (v) { props.setAttributes({ parent: parseInt(v, 10) || 0 }); },
+						__nextHasNoMarginBottom: true
+					}))),
+				preview('kipora/page-list', props));
+		},
+		save: NOTHING
+	});
 }(window.wp, window.kiporaBlocks || {}));

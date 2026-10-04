@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/cemetery",
+	"title": "Cemetery card",
+	"category": "kipora",
+	"description": "Address, area, who manages it, links to the map and the grave search, order button.",
+	"textdomain": "kipora",
+	"attributes": {
+		"cemetery": {
+			"type": "string",
+			"default": ""
+		},
+		"address": {
+			"type": "string",
+			"default": ""
+		},
+		"district": {
+			"type": "string",
+			"default": ""
+		},
+		"area": {
+			"type": "string",
+			"default": ""
+		},
+		"manager": {
+			"type": "string",
+			"default": ""
+		},
+		"portal": {
+			"type": "string",
+			"default": ""
+		},
+		"lat": {
+			"type": "string",
+			"default": ""
+		},
+		"lon": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonText": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "location",
+	"render": "file:./render.php"
+}
