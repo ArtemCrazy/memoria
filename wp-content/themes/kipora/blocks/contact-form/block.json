@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/contact-form",
+	"title": "Contact form",
+	"category": "kipora",
+	"description": "The message form with attachments, with a heading and a hint next to it.",
+	"textdomain": "kipora",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"hint": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false,
+		"multiple": false
+	},
+	"icon": "email",
+	"render": "file:./render.php"
+}

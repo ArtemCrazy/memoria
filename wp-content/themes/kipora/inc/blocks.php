@@ -41,7 +41,7 @@ add_action(
 		wp_enqueue_script(
 			'kipora-blocks',
 			get_theme_file_uri( 'assets/js/blocks.js' ),
-			[ 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-data', 'wp-server-side-render' ],
+			[ 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-data', 'wp-server-side-render', 'wp-plugins', 'wp-editor' ],
 			(string) filemtime( $path ),
 			true
 		);

@@ -371,7 +371,13 @@ foreach ( array_keys( $pages ) as $key ) {
 			continue;
 		}
 		Kipora\Lang::use( $lang );
-		$content = implode( "\n\n", array_map( 'serialize_block', $build( $key, $lang ) ) );
+		$blocks  = $build( $key, $lang );
+		$content = implode( "\n\n", array_map( 'serialize_block', $blocks ) );
+		// Description for search results: the lead of the page heading.
+		$lead = html_entity_decode( wp_strip_all_tags( (string) ( $blocks[0]['attrs']['lead'] ?? '' ) ), ENT_QUOTES );
+		if ( '' !== $lead ) {
+			update_post_meta( $id, 'kipora_seo_description', $lead );
+		}
 		[ $title, , $excerpt ] = $meta( $key, $lang );
 		wp_update_post( [ 'ID' => $id, 'post_content' => wp_slash( $content ), 'post_title' => $title, 'post_excerpt' => $excerpt ] );
 		echo "content {$key}/{$lang}: " . strlen( $content ) . " bytes\n";

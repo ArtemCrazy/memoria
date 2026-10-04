@@ -1,0 +1,211 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Crazy Signature — подпись «Разработано в Crazy Studio» для подвала сайта.
+
+   Летучая мышь вспархивает, уходит по дуге за край кадра и возвращается ровно
+   на место. Ванильный CSS плюс маленький скрипт — ни зависимостей, ни сборщика.
+
+   Всё настраивается переменными ниже: сам блок править не нужно.
+   Три режима задаются атрибутом data-cs-sign, набор подписи — классом
+   cs-sign--*. Подробности в FRAGMENT.md.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cs-sign {
+  /* — Настройки проекта — */
+  --cs-sign-size: 2.625rem;                        /* ширина мыши */
+  --cs-sign-gap: 0.75rem;                          /* просвет между мышью и текстом */
+  --cs-sign-ink: currentColor;                     /* цвет названия студии */
+  --cs-sign-dim: currentColor;                     /* мышь и надстрочная строка в покое */
+  --cs-sign-accent: #d97757;                       /* цвет мыши в полёте */
+  --cs-sign-line: currentColor;                    /* линейка в режиме hang */
+  --cs-sign-serif: Georgia, "Times New Roman", serif;
+  --cs-sign-flight: 2.7s;                          /* длительность полёта */
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cs-sign-gap);
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Приглушённые оттенки считаем от цвета текста подвала — тогда блок садится
+   на любой фон, светлый и тёмный, без настройки. Там, где color-mix не
+   поддерживается, останется просто currentColor: тише, но не сломано. */
+@supports (color: color-mix(in srgb, red 50%, transparent)) {
+  .cs-sign {
+    --cs-sign-dim: color-mix(in srgb, currentColor 55%, transparent);
+    --cs-sign-line: color-mix(in srgb, currentColor 18%, transparent);
+  }
+}
+
+.cs-sign:focus-visible {
+  outline: 2px solid var(--cs-sign-accent);
+  outline-offset: 6px;
+}
+
+/* ── Мышь ─────────────────────────────────────────────────────────────────── */
+
+.cs-sign__bat {
+  display: block;
+  width: var(--cs-sign-size);
+  flex: none;
+  color: var(--cs-sign-dim);
+  transition: color 0.45s ease;
+}
+.cs-sign__bat svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  fill: currentColor;
+}
+
+/* Акцентный цвет достаётся только моменту взлёта — в покое знак приглушённый.
+   Красить заодно и название студии не надо: по фирменному стилю акцент один. */
+.cs-sign.is-flying .cs-sign__bat { color: var(--cs-sign-accent); }
+
+/* Крылья вращаются вокруг плеча. viewBox обрезан по рисунку («5 10 90 34»),
+   поэтому точка вращения считается от его левого верхнего угла. */
+.cs-sign__wing {
+  transform-box: view-box;
+  transform-origin: 48.4px 12px;
+}
+.cs-sign__wing--l { transform-origin: 41.6px 12px; }
+
+/* ── Подпись ──────────────────────────────────────────────────────────────── */
+
+.cs-sign__words {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.cs-sign__made {
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cs-sign-dim);
+}
+.cs-sign__name {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--cs-sign-ink);
+}
+
+/* Наборы. Без модификатора подпись набрана гротеском — тем же шрифтом, что и
+   сайт. Гарнитуру для антиквенных наборов задаёт --cs-sign-serif. */
+.cs-sign--serif .cs-sign__name {
+  font-family: var(--cs-sign-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.cs-sign--book .cs-sign__name {
+  font-family: "Bookman Old Style", Constantia, var(--cs-sign-serif);
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+/* ── Режим «висит на линейке» ─────────────────────────────────────────────── */
+
+.cs-sign__rule { display: none; }
+
+.cs-sign[data-cs-sign="hang"] {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+.cs-sign[data-cs-sign="hang"] .cs-sign__rule {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--cs-sign-line);
+}
+/* Мышь упирается в линию макушкой (top: 0) — то есть держится за неё лапами,
+   а не висит рядом в воздухе. Силуэт тот же, просто перевёрнутый. */
+.cs-sign[data-cs-sign="hang"] .cs-sign__bat { transform: rotate(180deg); }
+/* Подпись отодвинута от линии вниз: вплотную она читалась как подчёркнутая,
+   а не как строка под разделителем. Мышь при этом остаётся на линии — отступ
+   получает только текст. */
+.cs-sign[data-cs-sign="hang"] .cs-sign__words { margin-top: 0.3rem; }
+
+/* ── Движение ─────────────────────────────────────────────────────────────── */
+
+/* Базовый полёт объявлен ДО режимов: у них та же специфичность, и решает
+   порядок — переопределение обязано идти следом, иначе не сработает. */
+.cs-sign.is-flying .cs-sign__bat {
+  animation-name: cs-sign-fly;
+  animation-duration: var(--cs-sign-flight);
+  animation-timing-function: cubic-bezier(0.38, 0.02, 0.32, 1);
+}
+.cs-sign[data-cs-sign="hang"].is-flying .cs-sign__bat {
+  animation-name: cs-sign-fly-hang;
+}
+
+.cs-sign.is-flying .cs-sign__wing {
+  animation: cs-sign-flap-r 0.24s infinite ease-in-out;
+}
+.cs-sign.is-flying .cs-sign__wing--l {
+  animation-name: cs-sign-flap-l;
+}
+
+@keyframes cs-sign-flap-r {
+  0%, 100% { transform: rotate(-36deg) scaleX(0.82); }
+  50%      { transform: rotate(22deg) scaleX(1); }
+}
+@keyframes cs-sign-flap-l {
+  0%, 100% { transform: rotate(36deg) scaleX(0.82); }
+  50%      { transform: rotate(-22deg) scaleX(1); }
+}
+
+/* Дальность полёта считается от размера знака — увеличишь мышь, дуга вырастет
+   вместе с ней и останется соразмерной. */
+@keyframes cs-sign-fly {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+  9%   { transform: translate(calc(var(--cs-sign-size) * -0.07), calc(var(--cs-sign-size) * -0.21)) rotate(-9deg) scale(1.03); }
+  26%  { transform: translate(calc(var(--cs-sign-size) * 0.81), calc(var(--cs-sign-size) * -1.05)) rotate(13deg) scale(0.95); }
+  42%  { transform: translate(calc(var(--cs-sign-size) * 2.52), calc(var(--cs-sign-size) * -0.67)) rotate(-7deg) scale(0.82); }
+  53%  { transform: translate(calc(var(--cs-sign-size) * 4.24), calc(var(--cs-sign-size) * -1.38)) rotate(9deg) scale(0.58); opacity: 1; }
+  56%  { transform: translate(calc(var(--cs-sign-size) * 4.76), calc(var(--cs-sign-size) * -1.52)) scale(0.5); opacity: 0; }
+  58%  { transform: translate(calc(var(--cs-sign-size) * -4.52), calc(var(--cs-sign-size) * -1.24)) scale(0.5); opacity: 0; }
+  64%  { transform: translate(calc(var(--cs-sign-size) * -3.57), calc(var(--cs-sign-size) * -1.05)) rotate(-8deg) scale(0.62); opacity: 1; }
+  79%  { transform: translate(calc(var(--cs-sign-size) * -1.57), calc(var(--cs-sign-size) * -0.33)) rotate(11deg) scale(0.84); }
+  92%  { transform: translate(calc(var(--cs-sign-size) * -0.19), calc(var(--cs-sign-size) * -0.38)) rotate(-8deg) scale(1); }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+/* То же самое, но старт и финиш — вверх ногами: мышь отцепляется от линейки,
+   переворачивается в воздухе и в конце снова зацепляется. */
+@keyframes cs-sign-fly-hang {
+  0%   { transform: translate(0, 0) rotate(180deg) scale(1); }
+  8%   { transform: translate(0, calc(var(--cs-sign-size) * 0.14)) rotate(196deg) scale(1); }
+  20%  { transform: translate(calc(var(--cs-sign-size) * 0.62), calc(var(--cs-sign-size) * -0.33)) rotate(24deg) scale(0.95); }
+  38%  { transform: translate(calc(var(--cs-sign-size) * 2.19), calc(var(--cs-sign-size) * -1.1)) rotate(-8deg) scale(0.78); }
+  52%  { transform: translate(calc(var(--cs-sign-size) * 4.05), calc(var(--cs-sign-size) * -0.57)) rotate(10deg) scale(0.58); opacity: 1; }
+  55%  { transform: translate(calc(var(--cs-sign-size) * 4.71), calc(var(--cs-sign-size) * -0.71)) scale(0.5); opacity: 0; }
+  58%  { transform: translate(calc(var(--cs-sign-size) * -4.43), calc(var(--cs-sign-size) * -0.95)) scale(0.5); opacity: 0; }
+  65%  { transform: translate(calc(var(--cs-sign-size) * -3.48), calc(var(--cs-sign-size) * -0.81)) rotate(-9deg) scale(0.64); opacity: 1; }
+  80%  { transform: translate(calc(var(--cs-sign-size) * -1.48), calc(var(--cs-sign-size) * -0.71)) rotate(12deg) scale(0.86); }
+  93%  { transform: translate(calc(var(--cs-sign-size) * -0.14), calc(var(--cs-sign-size) * -0.29)) rotate(150deg) scale(1); }
+  100% { transform: translate(0, 0) rotate(180deg) scale(1); }
+}
+
+/* Помощник: если подвал узкий, оберни подпись этим контейнером — мышь уйдёт
+   за его край, а горизонтальной прокрутки на странице не появится. */
+.cs-sign-frame {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Системная настройка «меньше движения» — мышь просто остаётся сидеть. */
+@media (prefers-reduced-motion: reduce) {
+  .cs-sign.is-flying .cs-sign__bat,
+  .cs-sign.is-flying .cs-sign__wing,
+  .cs-sign.is-flying .cs-sign__wing--l {
+    animation: none;
+  }
+}

@@ -6,6 +6,7 @@
 defined( 'ABSPATH' ) || exit;
 
 require_once __DIR__ . '/inc/blocks.php';
+require_once __DIR__ . '/inc/seo.php';
 
 add_action(
 	'after_setup_theme',
@@ -31,6 +32,9 @@ add_action(
 		wp_enqueue_style( 'kipora-brand', get_theme_file_uri( 'assets/css/brand.css' ), [], is_file( $brand ) ? (string) filemtime( $brand ) : '0.1.0' );
 		$css = get_theme_file_path( 'assets/css/theme.css' );
 		wp_enqueue_style( 'kipora-theme', get_theme_file_uri( 'assets/css/theme.css' ), [ 'kipora-brand' ], is_file( $css ) ? (string) filemtime( $css ) : '0.1.0' );
+		// Studio signature in the footer: the ready-made block from the studio catalogue (blocks/crazy-signature).
+		wp_enqueue_style( 'crazy-signature', get_theme_file_uri( 'blocks/crazy-signature/crazy-signature.css' ), [], (string) filemtime( get_theme_file_path( 'blocks/crazy-signature/crazy-signature.css' ) ) );
+		wp_enqueue_script_module( 'crazy-signature', get_theme_file_uri( 'blocks/crazy-signature/crazy-signature.js' ), [], (string) filemtime( get_theme_file_path( 'blocks/crazy-signature/crazy-signature.js' ) ) );
 		wp_enqueue_script( 'kipora-theme', get_theme_file_uri( 'assets/js/theme.js' ), [], (string) filemtime( get_theme_file_path( 'assets/js/theme.js' ) ), [ 'in_footer' => true, 'strategy' => 'defer' ] );
 	}
 );

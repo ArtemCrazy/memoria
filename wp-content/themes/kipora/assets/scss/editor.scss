@@ -85,3 +85,15 @@
 [data-rich-text-placeholder]::after {
 	opacity: 0.45;
 }
+
+// Stand-in for blocks that only work on the site (the contact form).
+.kp-editor-placeholder {
+	display: grid;
+	place-items: center;
+	min-height: 12rem;
+	padding: var(--kp-space-5);
+	border: 1.5px dashed var(--kp-lichen-deep);
+	border-radius: 2rem;
+	color: var(--kp-ink-soft);
+	text-align: center;
+}

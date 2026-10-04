@@ -549,4 +549,66 @@
 		},
 		save: NOTHING
 	});
+
+	registerBlockType('kipora/contacts', {
+		edit: function (props) {
+			return el(Fragment, null,
+				sidebar(panel(__('Contacts', 'kipora'),
+					el('p', null, __('Email, phone and address are edited in KIPORA → Settings. Empty ones are not shown.', 'kipora')))),
+				preview('kipora/contacts', props));
+		},
+		save: NOTHING
+	});
+
+	// The form itself works only on the site; the editor shows where it stands.
+	registerBlockType('kipora/contact-form', {
+		edit: function (props) {
+			return el('section', be.useBlockProps({ className: 'contact-form kp-block' }),
+				el('div', { className: 'contact-form__intro' },
+					heading(props, 'title'),
+					text(props, 'hint', 'p', 'contact-form__hint', __('Short hint next to the form', 'kipora'))),
+				el('div', { className: 'contact-form__body' },
+					el('div', { className: 'kp-editor-placeholder' }, __('Message form: name, email, phone, message and attachments. It works on the site.', 'kipora'))));
+		},
+		save: NOTHING
+	});
+
+	// "Search results" panel in the page sidebar: own title and description for Google.
+	var SeoPanel = (wp.editor && wp.editor.PluginDocumentSettingPanel) || (wp.editPost && wp.editPost.PluginDocumentSettingPanel);
+	if (wp.plugins && SeoPanel) {
+		wp.plugins.registerPlugin('kipora-seo', {
+			render: function () {
+				var type = wp.data.useSelect(function (s) { return s('core/editor').getCurrentPostType(); });
+				var meta = wp.data.useSelect(function (s) { return s('core/editor').getEditedPostAttribute('meta'); }) || {};
+				var editPost = wp.data.useDispatch('core/editor').editPost;
+				if (type !== 'page') {
+					return null;
+				}
+				var change = function (key) {
+					return function (value) {
+						var next = {};
+						next[key] = value;
+						editPost({ meta: next });
+					};
+				};
+				var title = meta.kipora_seo_title || '';
+				var description = meta.kipora_seo_description || '';
+				return el(SeoPanel, { name: 'kipora-seo', title: __('Search results', 'kipora') },
+					el(c.TextControl, {
+						label: __('Title in Google', 'kipora'),
+						help: __('Leave empty to use the page title. About 60 characters are shown.', 'kipora') + ' ' + title.length + '/60',
+						value: title,
+						onChange: change('kipora_seo_title'),
+						__nextHasNoMarginBottom: true
+					}),
+					el(c.TextareaControl, {
+						label: __('Description in Google', 'kipora'),
+						help: __('Leave empty to use the page excerpt. About 155 characters are shown.', 'kipora') + ' ' + description.length + '/155',
+						value: description,
+						onChange: change('kipora_seo_description'),
+						__nextHasNoMarginBottom: true
+					}));
+			}
+		});
+	}
 }(window.wp, window.kiporaBlocks || {}));

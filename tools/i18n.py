@@ -479,6 +479,21 @@ T = {
     'Subpage cards': ('Alamlehtede kaardid', 'Карточки подстраниц'),
     'Parent page number': ('Ülemlehe number', 'Номер родительской страницы'),
     'Leave 0 to show the subpages of this page. The card text is the page excerpt.': ('Jätke 0, et näidata selle lehe alamlehti. Kaardi tekst on lehe väljavõte.', 'Оставьте 0, чтобы показать подстраницы этой страницы. Текст карточки — отрывок страницы.'),
+    # Contact blocks, studio signature, search results panel.
+    'block title\x04Contact form': ('Kontaktivorm', 'Форма обратной связи'),
+    'block description\x04The message form with attachments, with a heading and a hint next to it.': ('Sõnumivorm koos manustega, pealkirja ja selgitusega kõrval.', 'Форма сообщения с вложениями, рядом заголовок и подсказка.'),
+    'block title\x04Contacts': ('Kontaktid', 'Контакты'),
+    'block description\x04Email, phone and address from KIPORA → Settings, in a row.': ('E-post, telefon ja aadress menüüst KIPORA → Seaded, ühes reas.', 'Почта, телефон и адрес из меню KIPORA → Настройки, в одну строку.'),
+    'Developed at': ('Arendanud', 'Разработано в'),
+    'Contacts': ('Kontaktid', 'Контакты'),
+    'Email, phone and address are edited in KIPORA → Settings. Empty ones are not shown.': ('E-posti, telefoni ja aadressi muudetakse menüüs KIPORA → Seaded. Tühje ei kuvata.', 'Почта, телефон и адрес меняются в меню KIPORA → Настройки. Пустые не показываются.'),
+    'Short hint next to the form': ('Lühike selgitus vormi kõrval', 'Короткая подсказка рядом с формой'),
+    'Message form: name, email, phone, message and attachments. It works on the site.': ('Sõnumivorm: nimi, e-post, telefon, sõnum ja manused. Töötab kodulehel.', 'Форма сообщения: имя, почта, телефон, сообщение и вложения. Работает на сайте.'),
+    'Search results': ('Otsingutulemused', 'В результатах поиска'),
+    'Title in Google': ('Pealkiri Google\'is', 'Заголовок в Google'),
+    'Leave empty to use the page title. About 60 characters are shown.': ('Jätke tühjaks, et kasutada lehe pealkirja. Kuvatakse umbes 60 tähemärki.', 'Оставьте пустым, чтобы использовать название страницы. Видно около 60 символов.'),
+    'Description in Google': ('Kirjeldus Google\'is', 'Описание в Google'),
+    'Leave empty to use the page excerpt. About 155 characters are shown.': ('Jätke tühjaks, et kasutada lehe väljavõtet. Kuvatakse umbes 155 tähemärki.', 'Оставьте пустым, чтобы использовать отрывок страницы. Видно около 155 символов.'),
 }
 
 PATTERN = re.compile(r"(?:__|_e|esc_html__|esc_html_e|esc_attr__|esc_attr_e)\(\s*(['\"])((?:\\.|(?!\1).)*)\1\s*,\s*'kipora'")

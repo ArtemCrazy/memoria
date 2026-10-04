@@ -52,4 +52,27 @@
 			}
 		}
 	}
+
+	// Bottom line: copyright on the left, the studio signature on the right.
+	&__bottom {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		gap: var(--kp-space-3) var(--kp-space-5);
+		padding-top: var(--kp-space-4);
+		padding-bottom: var(--kp-space-5);
+		border-top: 1px solid var(--kp-lichen);
+	}
+
+	&__copy {
+		margin: 0;
+	}
+
+	// The studio block takes its colours from the text around it; flight colour and serif from the brand.
+	.cs-sign {
+		--cs-sign-accent: var(--kp-accent);
+		--cs-sign-serif: var(--kp-font-display);
+		color: var(--kp-ink-soft);
+	}
 }

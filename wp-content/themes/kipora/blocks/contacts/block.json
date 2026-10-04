@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/contacts",
+	"title": "Contacts",
+	"category": "kipora",
+	"description": "Email, phone and address from KIPORA → Settings, in a row.",
+	"textdomain": "kipora",
+	"attributes": {},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "phone",
+	"render": "file:./render.php"
+}
