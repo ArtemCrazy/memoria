@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/compare",
+	"title": "Comparison",
+	"category": "kipora",
+	"description": "Two columns compared row by row, a quote and a button.",
+	"textdomain": "kipora",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"baseTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"brandTitle": {
+			"type": "string",
+			"default": "KIPORA"
+		},
+		"quote": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonText": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonUrl": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "editor-table",
+	"render": "file:./render.php"
+}

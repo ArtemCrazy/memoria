@@ -11,6 +11,7 @@ have both translations, otherwise the script fails and lists what is missing.
 """
 
 import glob
+import json
 import os
 import re
 import sys
@@ -314,7 +315,7 @@ T = {
     'See the photos': ('Vaadake fotosid', 'Смотрите фото'),
     'Photos before and after appear in your account.': ('Fotod enne ja pärast ilmuvad teie kontole.', 'Фото до и после появятся в личном кабинете.'),
     'A tidy grave with flowers and a candle': ('Korras haud lillede ja küünlaga', 'Ухоженная могила с цветами и свечой'),
-    'Step %d': ('%d. samm', 'Шаг %d'),
+    'Step %s': ('%s. samm', 'Шаг %s'),
     'An honest *comparison*': ('Aus *võrdlus*', 'Честное *сравнение*'),
     'Time': ('Aeg', 'Время'),
     'Half a day or more': ('Pool päeva või rohkem', 'Полдня или больше'),
@@ -364,6 +365,76 @@ T = {
     'Send a message': ('Saada sõnum', 'Написать сообщение'),
     'Write *to us*': ('Kirjutage *meile*', 'Напишите *нам*'),
     'We will answer to the email you enter in the form.': ('Vastame e-postile, mille vormis märgite.', 'Ответим на почту, которую вы укажете в форме.'),
+    # Home page headline used when the old page title is gone (tools/wp/home-blocks.php).
+    'We look after the *resting place* when you *can’t be there* yourself': ('Hoolitseme *puhkepaiga* eest, kui te ise *kohale ei jõua*', 'Ухаживаем за *местом памяти*, когда вы *не можете приехать* сами'),
+    # Block editor (theme blocks/*/block.json and assets/js/blocks.js).
+    'block title\x04First screen': ('Esimene ekraan', 'Первый экран'),
+    'block description\x04Headline, button, photo or video and service cards.': ('Pealkiri, nupp, foto või video ja teenuste kaardid.', 'Заголовок, кнопка, фото или видео и карточки услуг.'),
+    'block title\x04Service card': ('Teenuse kaart', 'Карточка услуги'),
+    'block description\x04A card on the first screen that opens the calculator.': ('Kaart esimesel ekraanil, mis avab kalkulaatori.', 'Карточка на первом экране, открывает калькулятор.'),
+    'block title\x04Photo and list': ('Foto ja loend', 'Фото и список'),
+    'block description\x04Photo, heading, numbered list and a quote below.': ('Foto, pealkiri, nummerdatud loend ja tsitaat all.', 'Фото, заголовок, нумерованный список и цитата под ними.'),
+    'block title\x04List item': ('Loendi rida', 'Пункт списка'),
+    'block description\x04One line of a numbered list.': ('Üks nummerdatud loendi rida.', 'Одна строка нумерованного списка.'),
+    'block title\x04Steps': ('Sammud', 'Шаги'),
+    'block description\x04Heading and cards with numbered steps.': ('Pealkiri ja nummerdatud sammude kaardid.', 'Заголовок и карточки с пронумерованными шагами.'),
+    'block title\x04Step': ('Samm', 'Шаг'),
+    'block description\x04A step card: photo, title and text.': ('Sammu kaart: foto, pealkiri ja tekst.', 'Карточка шага: фото, заголовок и текст.'),
+    'block title\x04Comparison': ('Võrdlus', 'Сравнение'),
+    'block description\x04Two columns compared row by row, a quote and a button.': ('Kaks veergu rida-realt, tsitaat ja nupp.', 'Две колонки, сравнение по строкам, цитата и кнопка.'),
+    'block title\x04Comparison row': ('Võrdluse rida', 'Строка сравнения'),
+    'block description\x04What is compared and the value in each column.': ('Mida võrreldakse ja väärtus kummaski veerus.', 'Что сравниваем и значение в каждой колонке.'),
+    'block title\x04List and photo with a card': ('Loend ja foto kaardiga', 'Список и фото с карточкой'),
+    'block description\x04Heading, text, numbered list, photo and a small card on it.': ('Pealkiri, tekst, nummerdatud loend, foto ja väike kaart sellel.', 'Заголовок, текст, нумерованный список, фото и маленькая карточка на нём.'),
+    'block title\x04Questions and answers': ('Küsimused ja vastused', 'Вопросы и ответы'),
+    'block description\x04Heading, questions that open on click and a link below.': ('Pealkiri, klõpsuga avanevad küsimused ja link all.', 'Заголовок, вопросы, которые раскрываются по клику, и ссылка ниже.'),
+    'block title\x04Question': ('Küsimus', 'Вопрос'),
+    'block description\x04A question and its answer.': ('Küsimus ja vastus.', 'Вопрос и ответ.'),
+    'Heading. Select words and press Ctrl+I for italic': ('Pealkiri. Kursiiviks valige sõnad ja vajutage Ctrl+I', 'Заголовок. Чтобы выделить слова курсивом, выделите их и нажмите Ctrl+I'),
+    'Headline. Select words and press Ctrl+I for italic': ('Pealkiri. Kursiiviks valige sõnad ja vajutage Ctrl+I', 'Заголовок. Чтобы выделить слова курсивом, выделите их и нажмите Ctrl+I'),
+    'Click to replace the photo': ('Foto vahetamiseks klõpsake', 'Нажмите, чтобы заменить фото'),
+    'Choose photo': ('Vali foto', 'Выбрать фото'),
+    'Restore the original': ('Taasta algne', 'Вернуть исходное'),
+    'What is in the photo (for screen readers and search)': ('Mis on fotol (ekraanilugeritele ja otsingule)', 'Что на фото (для экранных чтецов и поиска)'),
+    'Leave empty to open the price calculator in the language of the page.': ('Jätke tühjaks, et avada hinnakalkulaator lehe keeles.', 'Оставьте пустым, чтобы открывался калькулятор на языке страницы.'),
+    'Photo and video': ('Foto ja video', 'Фото и видео'),
+    'Photo': ('Foto', 'Фото'),
+    'Video over the photo': ('Video foto peal', 'Видео поверх фото'),
+    'A short muted loop. Without a video of your own, the original photo shows the candle video.': ('Lühike helita kordus. Kui oma videot pole, näitab algne foto küünla videot.', 'Короткое зацикленное видео без звука. Без своего видео на исходном фото показывается видео со свечой.'),
+    'Choose video': ('Vali video', 'Выбрать видео'),
+    'Remove video': ('Eemalda video', 'Убрать видео'),
+    'Button': ('Nupp', 'Кнопка'),
+    'Button link': ('Nupu link', 'Ссылка кнопки'),
+    'Line above the headline, e.g. the area you work in': ('Rida pealkirja kohal, nt teie tööpiirkond', 'Строка над заголовком, например, где вы работаете'),
+    'One or two sentences under the headline': ('Üks-kaks lauset pealkirja all', 'Одно-два предложения под заголовком'),
+    'Button text': ('Nupu tekst', 'Текст кнопки'),
+    'Service card': ('Teenuse kaart', 'Карточка услуги'),
+    'Opens the calculator with': ('Avab kalkulaatori valikuga', 'Открывает калькулятор с выбором'),
+    'Own link instead': ('Oma link', 'Своя ссылка вместо этого'),
+    'Leave empty to open the calculator.': ('Jätke tühjaks, et avada kalkulaator.', 'Оставьте пустым, чтобы открывался калькулятор.'),
+    'Card title': ('Kaardi pealkiri', 'Заголовок карточки'),
+    'Short text': ('Lühike tekst', 'Короткий текст'),
+    'List item': ('Loendi rida', 'Пункт списка'),
+    'Quote under the section. Ctrl+I for italic': ('Tsitaat ploki all. Kursiiv: Ctrl+I', 'Цитата под блоком. Курсив: Ctrl+I'),
+    'Label between the lines': ('Silt joonte vahel', 'Подпись между линиями'),
+    'Step title': ('Sammu pealkiri', 'Заголовок шага'),
+    'What happens at this step': ('Mis selles sammus toimub', 'Что происходит на этом шаге'),
+    'What is compared': ('Mida võrreldakse', 'Что сравниваем'),
+    'First column': ('Esimene veerg', 'Первая колонка'),
+    'Second column': ('Teine veerg', 'Вторая колонка'),
+    'Text under the comparison. Ctrl+I for italic': ('Tekst võrdluse all. Kursiiv: Ctrl+I', 'Текст под сравнением. Курсив: Ctrl+I'),
+    'Photos': ('Fotod', 'Фото'),
+    'Large photo': ('Suur foto', 'Большое фото'),
+    'Photo on the small card': ('Foto väikesel kaardil', 'Фото на маленькой карточке'),
+    'Text above the list': ('Tekst loendi kohal', 'Текст над списком'),
+    'Text of the small card': ('Väikese kaardi tekst', 'Текст маленькой карточки'),
+    'Link': ('Link', 'Ссылка'),
+    'Link under the questions': ('Link küsimuste all', 'Ссылка под вопросами'),
+    'Leave empty to open the contact page in the language of the page.': ('Jätke tühjaks, et avada kontaktileht lehe keeles.', 'Оставьте пустым, чтобы открывалась страница контактов на языке страницы.'),
+    'Text before the link': ('Tekst enne linki', 'Текст перед ссылкой'),
+    'Link text': ('Lingi tekst', 'Текст ссылки'),
+    'Question': ('Küsimus', 'Вопрос'),
+    'Answer': ('Vastus', 'Ответ'),
 }
 
 PATTERN = re.compile(r"(?:__|_e|esc_html__|esc_html_e|esc_attr__|esc_attr_e)\(\s*(['\"])((?:\\.|(?!\1).)*)\1\s*,\s*'kipora'")
@@ -373,7 +444,15 @@ def source_strings():
     files = glob.glob(os.path.join(ROOT, "wp-content/plugins/kipora-core/src/**/*.php"), recursive=True)
     files += glob.glob(os.path.join(ROOT, "wp-content/plugins/kipora-core/templates/**/*.php"), recursive=True)
     files += glob.glob(os.path.join(ROOT, "wp-content/themes/kipora/**/*.php"), recursive=True)
+    files += glob.glob(os.path.join(ROOT, "wp-content/themes/kipora/assets/js/*.js"))
+    files += glob.glob(os.path.join(ROOT, "tools/wp/*.php"))
     found = []
+    # Block titles and descriptions are translated by WordPress with a context.
+    for path in glob.glob(os.path.join(ROOT, "wp-content/themes/kipora/blocks/*/block.json")):
+        meta = json.load(open(path, encoding="utf-8"))
+        for key in ("title", "description"):
+            if meta.get(key) and f"block {key}\x04{meta[key]}" not in found:
+                found.append(f"block {key}\x04{meta[key]}")
     for path in files:
         text = open(path, encoding="utf-8").read()
         for m in PATTERN.finditer(text):
@@ -388,7 +467,9 @@ def source_strings():
 
 
 def php_string(value):
-    return "'" + value.replace("\\", "\\\\").replace("'", "\\'") + "'"
+    # A context ("block title") is joined to the string by the EOT character.
+    parts = ["'" + part.replace("\\", "\\\\").replace("'", "\\'") + "'" for part in value.split("\x04")]
+    return ' . "\\x04" . '.join(parts)
 
 
 def write(locale, index):
@@ -419,6 +500,22 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     for locale, index in (("et", 0), ("ru_RU", 1)):
         print("wrote " + os.path.relpath(write(locale, index), ROOT))
+        print("wrote " + os.path.relpath(write_js(locale, index), ROOT))
+
+
+def write_js(locale, index):
+    """Translations of the block editor script, in the JSON format of wp_set_script_translations()."""
+    text = open(os.path.join(ROOT, "wp-content/themes/kipora/assets/js/blocks.js"), encoding="utf-8").read()
+    messages = {"": {"domain": "messages", "lang": locale}}
+    for m in PATTERN.finditer(text):
+        source = m.group(2).replace("\\'", "'")
+        messages[source] = [T[source][index]]
+    data = {"domain": "messages", "locale_data": {"messages": messages}}
+    path = os.path.join(ROOT, "wp-content/themes/kipora/languages", f"kipora-{locale}-kipora-blocks.json")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(data, f, ensure_ascii=False)
+    return path
 
 
 if __name__ == "__main__":

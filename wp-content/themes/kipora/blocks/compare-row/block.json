@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/compare-row",
+	"title": "Comparison row",
+	"category": "kipora",
+	"description": "What is compared and the value in each column.",
+	"textdomain": "kipora",
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"base": {
+			"type": "string",
+			"default": ""
+		},
+		"brand": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "minus",
+	"parent": [
+		"kipora/compare"
+	]
+}

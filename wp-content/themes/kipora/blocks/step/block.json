@@ -1,0 +1,37 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/step",
+	"title": "Step",
+	"category": "kipora",
+	"description": "A step card: photo, title and text.",
+	"textdomain": "kipora",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"text": {
+			"type": "string",
+			"default": ""
+		},
+		"image": {
+			"type": "object",
+			"default": {}
+		},
+		"fallback": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "format-aside",
+	"parent": [
+		"kipora/steps"
+	],
+	"render": "file:./render.php"
+}

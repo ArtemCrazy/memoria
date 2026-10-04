@@ -131,6 +131,8 @@ def wp_script(client, site_dir, name):
     sftp.put(os.path.join(ROOT, "tools", "wp", name + ".php"), f"{site_dir}/wp-content/database/tests/{name}.php")
     sftp.close()
     url = f"https://korovai.crazytest.ru/memoria/?kp_run={token}&script={name}"
+    if "--force" in sys.argv:
+        url += "&force=1"
     req = urllib.request.Request(url, headers={"Cookie": "beget=begetok"})
     try:
         with urllib.request.urlopen(req, timeout=300) as r:

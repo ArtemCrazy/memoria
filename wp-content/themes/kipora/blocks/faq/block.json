@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/faq",
+	"title": "Questions and answers",
+	"category": "kipora",
+	"description": "Heading, questions that open on click and a link below.",
+	"textdomain": "kipora",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"moreText": {
+			"type": "string",
+			"default": ""
+		},
+		"linkText": {
+			"type": "string",
+			"default": ""
+		},
+		"linkUrl": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "editor-help",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/faq-item",
+	"title": "Question",
+	"category": "kipora",
+	"description": "A question and its answer.",
+	"textdomain": "kipora",
+	"attributes": {
+		"question": {
+			"type": "string",
+			"default": ""
+		},
+		"answer": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "editor-help",
+	"parent": [
+		"kipora/faq"
+	],
+	"render": "file:./render.php"
+}

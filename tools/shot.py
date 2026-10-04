@@ -60,7 +60,9 @@ def main():
                 break
         # Optional page script before capture, e.g. to remove a cookie banner of a reference site.
         if os.environ.get("KP_SHOT_JS"):
-            call("Runtime.evaluate", expression=os.environ["KP_SHOT_JS"], awaitPromise=True)
+            res = call("Runtime.evaluate", expression=os.environ["KP_SHOT_JS"], awaitPromise=True, returnByValue=True)
+            if res.get("result", {}).get("value") is not None:
+                print(res["result"]["value"])
             time.sleep(1)
         # Layout metrics report the viewport in mobile emulation; ask the page itself.
         res = call("Runtime.evaluate", expression="document.documentElement.scrollHeight", returnByValue=True)

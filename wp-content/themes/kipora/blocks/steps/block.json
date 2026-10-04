@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/steps",
+	"title": "Steps",
+	"category": "kipora",
+	"description": "Heading and cards with numbered steps.",
+	"textdomain": "kipora",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"label": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "editor-ol",
+	"render": "file:./render.php"
+}

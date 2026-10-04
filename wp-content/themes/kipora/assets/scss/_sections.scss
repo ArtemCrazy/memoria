@@ -51,11 +51,14 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	// Numbers follow the order of the items, also after they are moved in the editor.
+	counter-reset: point;
 
 	&__item {
 		display: flex;
 		align-items: center;
 		gap: var(--kp-space-4);
+		counter-increment: point;
 	}
 
 	// Circle drawn as a box: the number is centred by the grid, not by nudging.
@@ -68,6 +71,10 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 		border: 1.5px solid var(--kp-ink);
 		border-radius: 50%;
 		font: 400 var(--kp-text-m) / 1 var(--kp-font-display);
+
+		&::before {
+			content: counter(point, decimal-leading-zero);
+		}
 	}
 
 	&__text {
@@ -213,6 +220,7 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 		overflow-x: auto;
 		list-style: none;
 		scroll-snap-type: x mandatory;
+		counter-reset: step;
 
 		@media (min-width: $bp-wide) {
 			grid-template-columns: repeat(4, 1fr);
@@ -233,6 +241,7 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 	background: var(--kp-sticker);
 	text-align: center;
 	scroll-snap-align: start;
+	counter-increment: step;
 
 	&__photo {
 		display: block;
@@ -256,6 +265,10 @@ $scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 		border: 1.5px solid var(--kp-ink);
 		border-radius: var(--kp-radius-pill);
 		font: 400 var(--kp-text-l) / 1.1 var(--kp-font-display);
+	}
+
+	&__number::before {
+		content: counter(step);
 	}
 
 	&__title {

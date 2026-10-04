@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/hero",
+	"title": "First screen",
+	"category": "kipora",
+	"description": "Headline, button, photo or video and service cards.",
+	"textdomain": "kipora",
+	"attributes": {
+		"features": {
+			"type": "string",
+			"default": ""
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"lead": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonText": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"image": {
+			"type": "object",
+			"default": {}
+		},
+		"fallback": {
+			"type": "string",
+			"default": "hero-lantern"
+		},
+		"video": {
+			"type": "object",
+			"default": {}
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false,
+		"multiple": false
+	},
+	"icon": "cover-image",
+	"render": "file:./render.php"
+}

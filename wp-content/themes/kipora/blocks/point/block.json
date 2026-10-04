@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/point",
+	"title": "List item",
+	"category": "kipora",
+	"description": "One line of a numbered list.",
+	"textdomain": "kipora",
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "editor-ol",
+	"parent": [
+		"kipora/problem",
+		"kipora/memory"
+	],
+	"render": "file:./render.php"
+}

@@ -1,0 +1,46 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/memory",
+	"title": "List and photo with a card",
+	"category": "kipora",
+	"description": "Heading, text, numbered list, photo and a small card on it.",
+	"textdomain": "kipora",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"lead": {
+			"type": "string",
+			"default": ""
+		},
+		"image": {
+			"type": "object",
+			"default": {}
+		},
+		"fallback": {
+			"type": "string",
+			"default": "section-memory"
+		},
+		"cardImage": {
+			"type": "object",
+			"default": {}
+		},
+		"cardFallback": {
+			"type": "string",
+			"default": "section-memory-card"
+		},
+		"cardText": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "id-alt",
+	"render": "file:./render.php"
+}

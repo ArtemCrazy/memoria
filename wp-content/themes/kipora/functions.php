@@ -5,6 +5,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+require_once __DIR__ . '/inc/blocks.php';
+
 add_action(
 	'after_setup_theme',
 	static function (): void {
@@ -73,8 +75,9 @@ function kipora_theme_page( string $key ): string {
 }
 
 /**
- * "Hoolitseme *puhkepaiga* eest" → escaped text with <em> around starred words.
- * Lets the client set the italic accents of the hero headline from the page title.
+ * "Kirjutage *meile*" → escaped text with <em> around starred words, for
+ * headings that come from interface strings (the contact page). Blocks keep
+ * their italic as real <em> from the editor instead.
  */
 function kipora_theme_emphasis( string $title ): string {
 	return preg_replace( '/\*([^*]+)\*/u', '<em>$1</em>', esc_html( wp_strip_all_tags( $title ) ) );

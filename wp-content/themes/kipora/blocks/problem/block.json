@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/problem",
+	"title": "Photo and list",
+	"category": "kipora",
+	"description": "Photo, heading, numbered list and a quote below.",
+	"textdomain": "kipora",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"image": {
+			"type": "object",
+			"default": {}
+		},
+		"fallback": {
+			"type": "string",
+			"default": "section-problem"
+		},
+		"quote": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "format-image",
+	"render": "file:./render.php"
+}

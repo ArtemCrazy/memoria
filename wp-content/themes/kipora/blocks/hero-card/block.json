@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kipora/hero-card",
+	"title": "Service card",
+	"category": "kipora",
+	"description": "A card on the first screen that opens the calculator.",
+	"textdomain": "kipora",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"text": {
+			"type": "string",
+			"default": ""
+		},
+		"image": {
+			"type": "object",
+			"default": {}
+		},
+		"fallback": {
+			"type": "string",
+			"default": ""
+		},
+		"direction": {
+			"type": "string",
+			"default": "grave"
+		},
+		"url": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"icon": "id",
+	"parent": [
+		"kipora/hero"
+	],
+	"render": "file:./render.php"
+}
