@@ -102,9 +102,22 @@ form = {
 }
 r = s.post(f"{BASE}/wp-admin/admin-post.php", data=form, allow_redirects=False)
 loc = r.headers.get("Location", "")
-check("checkout redirects back (no Montonio keys on test)", r.status_code in (302, 303) and "kp_order=" in loc and "no_payment" in loc, f"{r.status_code} {loc}")
-order_id = int(re.search(r"kp_order=(\d+)", loc).group(1)) if "kp_order=" in loc else 0
+if "montonio" in loc:
+    # Sandbox keys are set: the order goes to the Montonio test payment page.
+    check("checkout redirects to Montonio sandbox", r.status_code in (302, 303) and "sandbox" in loc, f"{r.status_code} {loc}")
+    pay = anon.get(loc, timeout=30)
+    check("Montonio payment page opens", pay.status_code == 200, str(pay.status_code))
+    page = s.get(f"{BASE}/minu-konto/", params={"view": "orders"}).text
+    numbers = [int(x) for x in re.findall(r"KP-(\d+)", page)]
+    order_id = max(numbers) if numbers else 0
+    # The site accepts payment notices only with the Montonio order id it got for this order.
+    payment_uuid = wp("e2e-montonio-uuid")
+    loc = f"{BASE}/tellimus/?kp_order={order_id}"
+else:
+    check("checkout redirects back (no Montonio keys on test)", r.status_code in (302, 303) and "kp_order=" in loc and "no_payment" in loc, f"{r.status_code} {loc}")
+    order_id = int(re.search(r"kp_order=(\d+)", loc).group(1)) if "kp_order=" in loc else 0
 page = s.get(loc).text
+payment_uuid = locals().get("payment_uuid", "") or "e2e-uuid"
 check("result page: waiting for payment", "Ootame makse kinnitust" in page)
 
 tampered = dict(form, sel=b64url(json.dumps({"direction": "grave", "package": "nope"}).encode()))
@@ -142,7 +155,7 @@ check("PHP disguised as JPG is refused", "JPG, PNG, WEBP" in fake.text)
 # 4. Montonio webhook marks the order paid.
 secret = wp("e2e-keys")
 try:
-    base = {"accessKey": "e2e-access", "merchantReference": f"KP-{order_id}", "uuid": "e2e-uuid", "grandTotal": 179.9, "currency": "EUR", "exp": int(time.time()) + 600}
+    base = {"accessKey": "e2e-access", "merchantReference": f"KP-{order_id}", "uuid": payment_uuid, "grandTotal": 179.9, "currency": "EUR", "exp": int(time.time()) + 600}
     forged = jwt(dict(base, paymentStatus="PAID"), "wrong-secret")
     anon.post(f"{BASE}/wp-json/kipora/v1/montonio/notify", json={"orderToken": forged})
     page = s.get(f"{BASE}/minu-konto/", params={"view": "orders"}).text
